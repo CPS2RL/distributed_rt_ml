@@ -1,0 +1,13 @@
+method,Task,object,arrival_ms,processing_ms
+DeepThings,1,product_0001,0,456.379728
+DeepThings,2,product_0002,200,162.856139
+DeepThings,3,product_0003,400,55.192493
+DeepThings,4,product_0004,600,45.805589
+EdgeFlow,1,product_0001,0,102.279016
+EdgeFlow,2,product_0002,200,96.507746
+EdgeFlow,3,product_0003,400,209.748071
+EdgeFlow,4,product_0004,600,49.521553
+Proposed,1,product_0001,0,178.668927
+Proposed,2,product_0002,200,153.193536
+Proposed,3,product_0003,400,53.15345
+Proposed,4,product_0004,600,98.062272
