@@ -24,5 +24,13 @@ python plot_optimality_gap.py
 python plot solver_time.py
 ```
 
-
+# Figure 10
+Terminal 1
+```
+gz sim -r -v 3 five_camera_warehouse.sdf
+```
+Terminal 2
+```
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python five_camera_sorter.py
+```
 
