@@ -1,0 +1,1296 @@
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM10 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM10 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --skip-flashed
+esptool v5.6.0
+Serial port COM10:
+Connecting.......
+Connected to ESP32 on COM10:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:73:fa:e0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+Comparing flash contents against new data...
+Flash will be erased from 0x00001000 to 0x00007fff...
+Compressed 26176 bytes to 16585...
+Writing at 0x00007640 ------------------------------ 100.0% 16.20kB/16.20kB [0s]
+Wrote 26176 bytes (16585 compressed) at 0x00001000 in 0.5 seconds (380.8 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+Comparing flash contents against new data...
+'partition_table/partition-table.bin' at 0x00008000 already in flash, skipping write.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+Comparing flash contents against new data...
+Flash will be erased from 0x00010000 to 0x0018bfff...
+Compressed 1556224 bytes to 1273862...
+Writing at 0x0018bf00 ------------------------------ 100.0% 1.21MB/1.21MB [30s] s]
+Wrote 1556224 bytes (1273862 compressed) at 0x00010000 in 31.0 seconds (401.4 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM11 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM11 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM11:
+Connecting....
+Connected to ESP32 on COM11:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:74:52:d4
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+NOTE: Data not found in flash, flashing the whole image...
+Flash will be erased from 0x00001000 to 0x00007fff...
+Compressed 26176 bytes to 16585...
+Writing at 0x00007640 ------------------------------ 100.0% 16.20kB/16.20kB [0s]
+Wrote 26176 bytes (16585 compressed) at 0x00001000 in 0.5 seconds (383.4 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+NOTE: Data not found in flash, flashing the whole image...
+Flash will be erased from 0x00010000 to 0x0018bfff...
+Compressed 1556224 bytes to 1273862...
+Writing at 0x0018bf00 ------------------------------ 100.0% 1.21MB/1.21MB [30s] s]
+Wrote 1556224 bytes (1273862 compressed) at 0x00010000 in 31.0 seconds (401.4 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM9 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM9 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM9:
+Connecting......
+Connected to ESP32 on COM9:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:74:04:e0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+NOTE: Data not found in flash, flashing the whole image...
+Flash will be erased from 0x00001000 to 0x00007fff...
+Compressed 26176 bytes to 16585...
+Writing at 0x00007640 ------------------------------ 100.0% 16.20kB/16.20kB [0s]
+Wrote 26176 bytes (16585 compressed) at 0x00001000 in 0.5 seconds (383.2 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+NOTE: Data not found in flash, flashing the whole image...
+Flash will be erased from 0x00010000 to 0x0018bfff...
+Compressed 1556224 bytes to 1273862...
+Writing at 0x0018bf00 ------------------------------ 100.0% 1.21MB/1.21MB [30s] s]
+Wrote 1556224 bytes (1273862 compressed) at 0x00010000 in 31.0 seconds (401.3 kbit/s).
+Verifying written data...
+Hash of data verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM9 monitor
+Executing action: monitor
+Running idf_monitor in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST'
+Executing "C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:\esp\v6.1\esp-idf\tools/idf_monitor.py -p COM9 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\cnn_3esp_layer_benchmark.elf' 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader\bootloader.elf' --force-color -m 'C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe' 'C:\esp\v6.1\esp-idf\tools\idf.py' '-p' 'COM9'"...
+--- WARNING: GDB cannot open serial ports accessed as COMx
+--- NOTE: Using \\.\COM9 instead...
+--- esp-idf-monitor 1.10.0 on \\.\COM9 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (27) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+
+***ERROR*** A stack overflow in task main has been detected.
+
+
+Backtrace: 0x40088a81:0x3ffc6d10 0x40088a4d:0x3ffc6d30 0x40148b58:0x3ffc6d50 0x400897fb:0x3ffc6dd0 0x40089078:0x3ffc6df0 0x4008902a:0x000000bc |<-CORRUPTED
+--- 0x40088a81: panic_abort at C:/esp/v6.1/esp-idf/components/esp_system/panic.c:500
+--- 0x40088a4d: esp_system_abort at C:/esp/v6.1/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x40148b58: vApplicationStackOverflowHook at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:577
+--- 0x400897fb: vTaskSwitchContext at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3698
+--- 0x40089078: _frxt_dispatch at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+--- 0x4008902a: _frxt_int_exit at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+
+
+
+
+ELF file SHA256: 8dfb951dd
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (27) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (78) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (699) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (731) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM10 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM10 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM10:
+Connecting.....
+Connected to ESP32 on COM10:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:73:fa:e0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+'bootloader/bootloader.bin' at 0x00001000 verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+'cnn_3esp_layer_benchmark.bin' at 0x00010000 verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM11 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM11 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM11:
+Connecting.....
+Connected to ESP32 on COM11:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:74:52:d4
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+'bootloader/bootloader.bin' at 0x00001000 verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+'cnn_3esp_layer_benchmark.bin' at 0x00010000 verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM9 monitor
+Executing action: monitor
+Running idf_monitor in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST'
+Executing "C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:\esp\v6.1\esp-idf\tools/idf_monitor.py -p COM9 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\cnn_3esp_layer_benchmark.elf' 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader\bootloader.elf' --force-color -m 'C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe' 'C:\esp\v6.1\esp-idf\tools\idf.py' '-p' 'COM9'"...
+--- WARNING: GDB cannot open serial ports accessed as COMx
+--- NOTE: Using \\.\COM9 instead...
+--- esp-idf-monitor 1.10.0 on \\.\COM9 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+d:0x400780�ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+run 1
+execution time of layers (ms): {Stem: 3.501, D1: 2.604, P1: 2.413, D2: 1.626, P2: 2.303, D3: 2.973, P3: 3.797, D4: 1.440, P4: 3.803,D5: 2.503, P5: 6.773, D6: 1.223, P6: 7.584, D7: 1.929, P7: 21.150, D8: 1.809, P8: 21.149, D9: 1.818, P9: 21.164, D10: 1.951, P10: 21.158, D11: 1.811, P11: 20.479, D12: 1.435, P12: 20.313, D13: 1.989, P13: 40.212, GAP: 0.159, FC: 1.390}
+halo exchange time of layers (ms): {Stem: 24.212, D1: 90.526, P1: 0.000, D2: 83.308, P2: 0.000, D3: 156.524, P3: 0.000, D4: 93.859, P4: 0.000, D5: 154.612, P5: 0.000, D6: 107.851, P6: 0.000, D7: 64.575, P7: 0.000, D8: 63.954, P8: 0.000, D9: 65.385, P9: 0.000, D10: 66.489, P10: 0.000, D11: 91.162, P11: 0.000, D12: 42.927, P12: 0.000, D13: 294.086, P13: 0.000, GAP: 0.000, FC: 0.000}
+
+***ERROR*** A stack overflow in task main has been detected.
+
+
+Backtrace: 0x40088a81:0x3ffc6d10 0x40088a4d:0x3ffc6d30 0x40148b58:0x3ffc6d50 0x400897fb:0x3ffc6dd0 0x40089078:0x3ffc6df0 0x4008902a:0x000000bc |<-CORRUPTED
+--- 0x40088a81: panic_abort at C:/esp/v6.1/esp-idf/components/esp_system/panic.c:500
+--- 0x40088a4d: esp_system_abort at C:/esp/v6.1/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x40148b58: vApplicationStackOverflowHook at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:577
+--- 0x400897fb: vTaskSwitchContext at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3698
+--- 0x40089078: _frxt_dispatch at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+--- 0x4008902a: _frxt_int_exit at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+
+
+
+
+ELF file SHA256: 8dfb951dd
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (27) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (78) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (699) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (731) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM10 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM10 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM10:
+Connecting.....
+Connected to ESP32 on COM10:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:73:fa:e0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+'bootloader/bootloader.bin' at 0x00001000 verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+'cnn_3esp_layer_benchmark.bin' at 0x00010000 verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM9 monitor
+Executing action: monitor
+Running idf_monitor in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST'
+Executing "C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:\esp\v6.1\esp-idf\tools/idf_monitor.py -p COM9 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\cnn_3esp_layer_benchmark.elf' 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader\bootloader.elf' --force-color -m 'C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe' 'C:\esp\v6.1\esp-idf\tools\idf.py' '-p' 'COM9'"...
+--- WARNING: GDB cannot open serial ports accessed as COMx
+--- NOTE: Using \\.\COM9 instead...
+--- esp-idf-monitor 1.10.0 on \\.\COM9 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+
+load:0x�ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+run 1
+execution time of layers (ms): {Stem: 3.470, D1: 2.561, P1: 2.152, D2: 1.618, P2: 2.081, D3: 2.989, P3: 3.789, D4: 1.170, P4: 4.167,D5: 2.203, P5: 7.200, D6: 1.214, P6: 8.488, D7: 1.924, P7: 21.147, D8: 1.808, P8: 21.154, D9: 1.851, P9: 21.165, D10: 1.926, P10: 21.155, D11: 1.771, P11: 21.148, D12: 1.383, P12: 20.311, D13: 2.003, P13: 40.214, GAP: 0.158, FC: 1.390}
+halo exchange time of layers (ms): {Stem: 23.023, D1: 100.180, P1: 0.000, D2: 132.083, P2: 0.000, D3: 466.166, P3: 0.000, D4: 83.601, P4: 0.000, D5: 154.601, P5: 0.000, D6: 97.817, P6: 0.000, D7: 63.251, P7: 0.000, D8: 69.421, P8: 0.000, D9: 78.934, P9: 0.000, D10:70.291, P10: 0.000, D11: 70.079, P11: 0.000, D12: 45.429, P12: 0.000, D13: 296.470, P13: 0.000, GAP: 0.000, FC: 0.000}
+run 2
+execution time of layers (ms): {Stem: 3.442, D1: 2.556, P1: 2.152, D2: 1.641, P2: 2.326, D3: 2.970, P3: 3.844, D4: 1.147, P4: 4.135,D5: 2.226, P5: 7.221, D6: 1.039, P6: 8.530, D7: 1.921, P7: 21.148, D8: 1.794, P8: 21.153, D9: 1.842, P9: 21.675, D10: 1.920, P10: 21.148, D11: 1.810, P11: 21.150, D12: 1.377, P12: 20.313, D13: 3.151, P13: 40.213, GAP: 0.158, FC: 1.390}
+halo exchange time of layers (ms): {Stem: 25.823, D1: 94.490, P1: 0.000, D2: 82.400, P2: 0.000, D3: 167.555, P3: 0.000, D4: 81.484, P4: 0.000, D5: 167.566, P5: 0.000, D6: 104.542, P6: 0.000, D7: 68.736, P7: 0.000, D8: 70.983, P8: 0.000, D9: 85.926, P9: 0.000, D10: 73.413, P10: 0.000, D11: 73.300, P11: 0.000, D12: 50.376, P12: 0.000, D13: 303.949, P13: 0.000, GAP: 0.000, FC: 0.000}
+run 3
+execution time of layers (ms): {Stem: 3.442, D1: 2.557, P1: 2.152, D2: 1.638, P2: 2.326, D3: 2.974, P3: 3.847, D4: 1.401, P4: 3.301,D5: 2.226, P5: 7.137, D6: 1.227, P6: 6.826, D7: 1.848, P7: 21.627, D8: 1.687, P8: 21.671, D9: 1.814, P9: 20.506, D10: 1.977, P10: 21.158, D11: 1.823, P11: 21.146, D12: 1.137, P12: 20.961, D13: 1.955, P13: 40.214, GAP: 0.159, FC: 1.393}
+halo exchange time of layers (ms): {Stem: 23.337, D1: 95.526, P1: 0.000, D2: 82.076, P2: 0.000, D3: 153.410, P3: 0.000, D4: 89.192, P4: 0.000, D5: 454.757, P5: 0.000, D6: 97.004, P6: 0.000, D7: 68.339, P7: 0.000, D8: 66.037, P8: 0.000, D9: 67.612, P9: 0.000, D10: 65.898, P10: 0.000, D11: 74.902, P11: 0.000, D12: 49.033, P12: 0.000, D13: 11.521, P13: 0.000, GAP: 0.000, FC: 0.000}
+
+***ERROR*** A stack overflow in task main has been detected.
+
+
+Backtrace: 0x40088a81:0x3ffc6bd0 0x40088a4d:0x3ffc6bf0 0x40148b58:0x3ffc6c10 0x400897fb:0x3ffc6c90 0x40089078:0x3ffc6cb0 0x4008902a:0xa5a5a5a5 |<-CORRUPTED
+--- 0x40088a81: panic_abort at C:/esp/v6.1/esp-idf/components/esp_system/panic.c:500
+--- 0x40088a4d: esp_system_abort at C:/esp/v6.1/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x40148b58: vApplicationStackOverflowHook at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:577
+--- 0x400897fb: vTaskSwitchContext at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3698
+--- 0x40089078: _frxt_dispatch at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+--- 0x4008902a: _frxt_int_exit at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+
+
+
+
+ELF file SHA256: 8dfb951dd
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:entry 0x40080644
+2259
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (27) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (78) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (699) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (731) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.
+
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM11 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM11 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM11:
+Connecting....
+Connected to ESP32 on COM11:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:74:52:d4
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+'bootloader/bootloader.bin' at 0x00001000 verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+'cnn_3esp_layer_benchmark.bin' at 0x00010000 verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM10 flash
+Adding "flash"'s dependency "all" to list of commands with default set of options.
+Executing action: all (aliases: build)
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja all"...
+[1/4] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt...nal/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin"
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Deskt... Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[4/4] Completed 'bootloader'Executing action: flash
+Running ninja in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build'
+Executing "ninja flash"...
+[1/5] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/partition_table/partition-table.bin" "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/cnn_3esp_layer_benchmark.bin""
+cnn_3esp_layer_benchmark.bin binary size 0x17bf00 bytes. Smallest app partition is 0x1f0000 bytes. 0x74100 bytes (23%) free.
+[2/5] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader" && C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:/esp/v6.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 "C:/Users/tasni/Desktop/Code Final/Proposed/MobileNet-MNIST/build/bootloader/bootloader.bin""
+Bootloader binary size 0x6640 bytes. 0x9c0 bytes (9%) free.
+[3/5] No install step for 'bootloader'
+[4/5] Completed 'bootloader'
+[4/5] Running utility command for flash
+esptool --chip esp32 -p COM10 -b 460800 --before=default-reset --after=hard-reset write-flash --flash-mode dio --flash-freq 40m --flash-size 2MB 0x1000 bootloader/bootloader.bin 0x8000 partition_table/partition-table.bin 0x10000 cnn_3esp_layer_benchmark.bin --diff-with bootloader/bootloader_flashed.bin partition_table/partition-table_flashed.bin cnn_3esp_layer_benchmark_flashed.bin
+esptool v5.6.0
+Serial port COM10:
+Connecting....
+Connected to ESP32 on COM10:
+Chip type:          ESP32-D0WD-V3 (revision v3.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                28:05:a5:73:fa:e0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+
+Writing 'bootloader/bootloader.bin' at 0x00001000...
+SHA digest in image updated.
+SHA digest in image updated.
+No changed sectors found, verifying if data is in flash...
+'bootloader/bootloader.bin' at 0x00001000 verified.
+
+Writing 'partition_table/partition-table.bin' at 0x00008000...
+No changed sectors found, verifying if data is in flash...
+'partition_table/partition-table.bin' at 0x00008000 verified.
+
+Writing 'cnn_3esp_layer_benchmark.bin' at 0x00010000...
+No changed sectors found, verifying if data is in flash...
+'cnn_3esp_layer_benchmark.bin' at 0x00010000 verified.
+
+Hard resetting via RTS pin...
+Done
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST> idf.py -p COM9 monitor
+Executing action: monitor
+Running idf_monitor in directory 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST'
+Executing "C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe C:\esp\v6.1\esp-idf\tools/idf_monitor.py -p COM9 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\cnn_3esp_layer_benchmark.elf' 'C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST\build\bootloader\bootloader.elf' --force-color -m 'C:\Espressif\tools\python\v6.1\venv\Scripts\python.exe' 'C:\esp\v6.1\esp-idf\tools\idf.py' '-p' 'COM9'"...
+--- WARNING: GDB cannot open serial ports accessed as COMx
+--- NOTE: Using \\.\COM9 instead...
+--- esp-idf-monitor 1.10.0 on \\.\COM9 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+:0x400780�ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (28) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (79) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (700) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (732) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+run 1
+execution time of layers (ms): {Stem: 3.497, D1: 2.328, P1: 2.385, D2: 1.388, P2: 2.081, D3: 2.986, P3: 3.796, D4: 1.452, P4: 3.768,D5: 2.202, P5: 7.253, D6: 1.219, P6: 7.120, D7: 1.931, P7: 21.155, D8: 1.806, P8: 21.154, D9: 1.862, P9: 21.165, D10: 1.933, P10: 21.151, D11: 1.795, P11: 21.144, D12: 1.380, P12: 20.312, D13: 1.637, P13: 40.563, GAP: 0.158, FC: 1.390}
+halo exchange time of layers (ms): {Stem: 25.383, D1: 107.611, P1: 0.000, D2: 390.377, P2: 0.000, D3: 467.392, P3: 0.000, D4: 82.183, P4: 0.000, D5: 158.885, P5: 0.000, D6: 100.030, P6: 0.000, D7: 64.899, P7: 0.000, D8: 72.776, P8: 0.000, D9: 69.608, P9: 0.000, D10: 70.813, P10: 0.000, D11: 72.018, P11: 0.000, D12: 40.395, P12: 0.000, D13: 296.861, P13: 0.000, GAP: 0.000, FC: 0.000}
+run 2
+execution time of layers (ms): {Stem: 3.474, D1: 2.613, P1: 2.386, D2: 1.641, P2: 2.319, D3: 3.005, P3: 3.834, D4: 1.440, P4: 3.309,D5: 2.226, P5: 7.191, D6: 1.029, P6: 8.488, D7: 1.921, P7: 21.149, D8: 1.700, P8: 21.825, D9: 1.774, P9: 21.610, D10: 1.920, P10: 21.156, D11: 1.766, P11: 21.150, D12: 1.381, P12: 20.316, D13: 2.045, P13: 40.216, GAP: 0.159, FC: 1.390}
+halo exchange time of layers (ms): {Stem: 30.172, D1: 92.667, P1: 0.000, D2: 93.940, P2: 0.000, D3: 167.503, P3: 0.000, D4: 82.138, P4: 0.000, D5: 157.421, P5: 0.000, D6: 99.149, P6: 0.000, D7: 74.672, P7: 0.000, D8: 69.236, P8: 0.000, D9: 78.673, P9: 0.000, D10: 73.056, P10: 0.000, D11: 67.079, P11: 0.000, D12: 57.933, P12: 0.000, D13: 298.371, P13: 0.000, GAP: 0.000, FC: 0.000}
+
+***ERROR*** A stack overflow in task main has been detected.
+
+
+Backtrace: 0x40088a81:0x3ffc6d10 0x40088a4d:0x3ffc6d30 0x40148b58:0x3ffc6d50 0x400897fb:0x3ffc6dd0 0x40089078:0x3ffc6df0 0x4008902a:0x000000bc |<-CORRUPTED
+--- 0x40088a81: panic_abort at C:/esp/v6.1/esp-idf/components/esp_system/panic.c:500
+--- 0x40088a4d: esp_system_abort at C:/esp/v6.1/esp-idf/components/esp_system/port/esp_system_chip.c:87
+--- 0x40148b58: vApplicationStackOverflowHook at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:577
+--- 0x400897fb: vTaskSwitchContext at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/tasks.c:3698
+--- 0x40089078: _frxt_dispatch at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:451
+--- 0x4008902a: _frxt_int_exit at C:/esp/v6.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/portasm.S:246
+
+
+
+
+ELF file SHA256: 8dfb951dd
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0040,len:6272
+load:0x40078000,len:15824
+load:0x40080400,len:3988
+--- 0x40080400: _invalid_pc_placeholder at C:/esp/v6.1/esp-idf/components/xtensa/xtensa_vectors.S:2259
+entry 0x40080644
+--- 0x40080644: call_start_cpu0 at C:/esp/v6.1/esp-idf/components/bootloader/subproject/main/bootloader_start.c:27
+I (27) boot: ESP-IDF v6.1 2nd stage bootloader
+I (27) boot: compile time Nov  9 2026 11:27:31
+I (27) boot: Multicore bootloader
+I (29) boot: chip revision: v3.1
+I (31) boot.esp32: SPI Speed      : 40MHz
+I (35) boot.esp32: SPI Mode       : DIO
+I (39) boot.esp32: SPI Flash Size : 2MB
+I (42) boot: Enabling RNG early entropy source...
+I (47) boot: Partition Table:
+I (49) boot: ## Label            Usage          Type ST Offset   Length
+I (56) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (62) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (69) boot:  2 factory          factory app      00 00 00010000 001f0000
+I (75) boot: End of partition table
+I (78) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=e7a9ch (948892) map
+I (424) esp_image: segment 1: paddr=000f7ac4 vaddr=3ffb0000 size=0443ch ( 17468) load
+I (431) esp_image: segment 2: paddr=000fbf08 vaddr=40080000 size=04110h ( 16656) load
+I (438) esp_image: segment 3: paddr=00100020 vaddr=400d0020 size=7c340h (508736) map
+I (620) esp_image: segment 4: paddr=0017c368 vaddr=40084110 size=0fb3ch ( 64316) load
+I (646) esp_image: segment 5: paddr=0018beac vaddr=50000000 size=00028h (    40) load
+I (657) boot: Loaded app from partition at offset 0x10000
+I (657) boot: Disabling RNG early entropy source...
+I (667) cpu_start: Multicore app
+I (675) cpu_start: GPIO 3 and 1 are used as console UART I/O pins
+I (676) cpu_start: Pro cpu start user code
+I (676) cpu_start: cpu freq: 160000000 Hz
+I (678) app_init: Application information:
+I (681) app_init: Project name:     cnn_3esp_layer_benchmark
+I (687) app_init: App version:      1
+I (690) app_init: Compile time:     Nov  9 2026 11:26:50
+I (695) app_init: ELF file SHA256:  8dfb951dd...
+I (699) app_init: ESP-IDF:          v6.1
+I (703) efuse_init: Min chip rev:     v0.0
+I (707) efuse_init: Max chip rev:     v3.99
+I (711) efuse_init: Chip rev:         v3.1
+I (715) heap_init: Initializing. RAM available for dynamic allocation:
+I (721) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (726) heap_init: At 3FFC5960 len 0001A6A0 (105 KiB): DRAM
+I (731) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (737) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (742) heap_init: At 40093C4C len 0000C3B4 (48 KiB): IRAM
+I (749) spi_flash: detected chip: generic
+I (751) spi_flash: flash io: dio
+W (754) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (768) main_task: Started on CPU0
+I (768) main_task: Calling app_main()
+
+(venv) PS C:\Users\tasni\Desktop\Code Final\Proposed\MobileNet-MNIST>

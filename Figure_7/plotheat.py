@@ -4,7 +4,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
-CSV_FILE = "workload.csv"
+CSV_FILE = "workloads.csv"
 
 strategies = ["DeepThings", "EdgeFlow", "Proposed"]
 filenames = ["deepthings_workload", "edgeflow_workload", "ours_workload"]

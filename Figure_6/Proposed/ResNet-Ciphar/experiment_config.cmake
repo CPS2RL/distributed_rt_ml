@@ -1,0 +1,9 @@
+# Edit ONLY these three settings to select your experiment.
+# Valid models: lenet5, resnet20, mobilenetv1_025
+# Valid datasets: mnist, cifar10
+set(EXPERIMENT_MODEL "resnet20")
+set(EXPERIMENT_DATASET "cifar10")
+set(EXPERIMENT_RUNS 50)
+
+# Set ON to print a second line with synchronized halo exchange overhead.
+set(EXPERIMENT_REPORT_HALO_TIME ON)

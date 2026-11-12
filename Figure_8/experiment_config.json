@@ -1,0 +1,89 @@
+{
+  "input_size": [96, 96],
+  "devices": 3,
+  "input_modes": {"BW": 1, "RGB": 3},
+  "classifiers_to_run": ["original_10class"],
+  "single_k": 51,
+  "k_start": 1,
+  "k_end": 602,
+  "k_step": 20,
+  "batch_size": 64,
+  "allow_zero_rows": true,
+  "max_states_per_layer": 100000,
+  "outputs": {
+    "dp": "dp_results.csv",
+    "single_k": "single_k_results.csv",
+    "sweep": "sweep_k_results.csv"
+  },
+  "models": {
+    "LeNet5": {
+      "architecture": "sequential",
+      "layers": [
+        {"name": "conv1", "op": "standard", "out_channels": 6, "kernel": 5, "stride": 1, "padding": 0},
+        {"name": "pool1", "op": "pool", "kernel": 2, "stride": 2, "padding": 0},
+        {"name": "conv2", "op": "standard", "out_channels": 16, "kernel": 5, "stride": 1, "padding": 0},
+        {"name": "pool2", "op": "pool", "kernel": 2, "stride": 2, "padding": 0}
+      ],
+      "classifiers": {
+        "original_10class": {"type": "fc", "hidden_and_output": [120, 84, 10], "fixed_us": 250},
+        "binary": {"type": "fc", "hidden_and_output": [32, 1], "fixed_us": 250}
+      },
+      "timing": {
+        "macs_per_us": 50,
+        "setup_us": 50,
+        "sync_us": 100,
+        "packet_bytes": 200,
+        "packet_overhead_us": 100,
+        "link_bytes_per_us": 1.0,
+        "activation_bytes": 1,
+        "deadline_us": 7000000
+      }
+    },
+    "ResNet20": {
+      "architecture": "resnet20",
+      "stem_channels": 16,
+      "stages": [
+        {"channels": 16, "blocks": 3},
+        {"channels": 32, "blocks": 3},
+        {"channels": 64, "blocks": 3}
+      ],
+      "classifiers": {
+        "original_10class": {"type": "gap_fc", "classes": 10, "fixed_us": 50},
+        "binary": {"type": "gap_fc", "classes": 1, "fixed_us": 50}
+      },
+      "timing": {
+        "macs_per_us": 96.1,
+        "setup_us": 50,
+        "sync_us": 100,
+        "packet_bytes": 200,
+        "packet_overhead_us": 100,
+        "link_bytes_per_us": 1.0,
+        "activation_bytes": 1,
+        "deadline_us": 7000000
+      }
+    },
+    "MobileNetV1_0.25": {
+      "architecture": "mobilenet_v1",
+      "stem_channels": 8,
+      "blocks": [
+        [16, 1], [32, 2], [32, 1], [64, 2], [64, 1],
+        [128, 2], [128, 1], [128, 1], [128, 1], [128, 1],
+        [128, 1], [256, 1], [256, 1]
+      ],
+      "classifiers": {
+        "original_10class": {"type": "gap_fc", "classes": 10, "fixed_us": 50},
+        "binary": {"type": "gap_fc", "classes": 1, "fixed_us": 50}
+      },
+      "timing": {
+        "macs_per_us": 47,
+        "setup_us": 50,
+        "sync_us": 100,
+        "packet_bytes": 200,
+        "packet_overhead_us": 100,
+        "link_bytes_per_us": 1.0,
+        "activation_bytes": 1,
+        "deadline_us": 8000000
+      }
+    }
+  }
+}
