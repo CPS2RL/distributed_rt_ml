@@ -18,7 +18,7 @@ models = {
     "MobileNetV1_0.25": ("MobileNet", "#009E73")
 }
 
-styles = {"BW": "-", "RGB": "--"}
+styles = {"MNIST": "-", "CIPHAR-10": "--"}
 
 # Read CSV files
 with open(DP_FILE) as f:

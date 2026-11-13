@@ -118,13 +118,23 @@ static inline PartRange part_dependency(PartRange out, int source_h,
 /* For LeNet-5: input -> C1 -> P1 -> C2 -> P2.
  * Final Pool2 rows are owned disjointly; preceding stages expand backwards.
  */
-static inline void redundant_lenet_plan(int id, PartRange spans[5]) {
-    spans[4]=part_range(PART_LENET[4][id], PART_LENET[4][id+1]);
-    const int H=PART_IMAGE_H;
-    spans[3]=part_dependency(spans[4], (H-12)/2, 2, 2, 0);
-    spans[2]=part_dependency(spans[3], (H-4)/2, 1, 5, 0);
-    spans[1]=part_dependency(spans[2], H-4, 2, 2, 0);
-    spans[0]=part_dependency(spans[1], H, 1, 5, 0);
+static inline void redundant_lenet_plan(int id, PartRange spans[5])
+{
+    const int H = PART_IMAGE_H;
+
+    spans[4] = part_range(
+        PART_LENET[4][id],
+        PART_LENET[4][id+1]
+    );
+
+    spans[3] = part_dependency(spans[4], (H-12)/2, 2, 2, 0);
+    spans[2] = part_dependency(spans[3], (H-4)/2, 1, 5, 0);
+
+    /* Full Conv1 feature map on every device */
+    spans[1] = part_range(0, H-4);
+
+    /* Full input image on every device */
+    spans[0] = part_range(0, H);
 }
 typedef struct {
     PartRange input, stem;
@@ -145,7 +155,7 @@ static inline RedundantResnetPlan redundant_resnet_plan(int id) {
         /* The 1x1 projection/identity skip is contained in this span. */
     }
     p.stem=need;
-    p.input=part_dependency(p.stem,H,1,3,1);
+    p.input=part_range(0,H);
     return p;
 }
 /* MobileNetV1-0.25 downsamples to one spatial row. Three disjoint final
@@ -153,13 +163,9 @@ static inline RedundantResnetPlan redundant_resnet_plan(int id) {
  * Use complete pre-input replication: three real independent full-image
  * executions, each doing redundant local work without intermediate radio.
  */
-static inline PartRange redundant_input_span(int id) {
-#if EXP_MODEL_ID == 1
-    PartRange p[5]; redundant_lenet_plan(id,p); return p[0];
-#elif EXP_MODEL_ID == 2
-    return redundant_resnet_plan(id).input;
-#else
-    (void)id; return part_range(0,PART_IMAGE_H);
-#endif
+static inline PartRange redundant_input_span(int id)
+{
+    (void)id;
+    return part_range(0, PART_IMAGE_H);
 }
 #endif

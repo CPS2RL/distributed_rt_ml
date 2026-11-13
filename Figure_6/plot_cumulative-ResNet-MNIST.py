@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 
 # CSV files
 files = {
-    "DeepThings": "layer_times-deepthings-resnet-ciphar.csv",
-    "EdgeFlow": "layer_times-edgeflow-resnet-ciphar.csv",
-    "Proposed": "layer_times-proposed-resnet-ciphar.csv"
+    "DeepThings": "layer_times-deepthings-resnet-mnist.csv",
+    "EdgeFlow": "layer_times-edgeflow-resnet-mnist.csv",
+    "Proposed": "layer_times-proposed-resnet-mnist.csv"
 }
 
 
@@ -48,8 +48,7 @@ for (label, file), color in zip(files.items(), colors):
         label=label
     )
 
-# horizontal line at y = 60
-ax.axhline(y=6000, linestyle='--', linewidth=1, color='black')
+ax.axhline(y=5000, linestyle='--', linewidth=1, color='black')
 
 ax.set_xticks([1, 5, 10, 15, 20, 25, 30])
 ax.set_xlim(1, 30)
@@ -59,6 +58,6 @@ ax.legend(frameon=True, loc="upper left")
 
 plt.tight_layout(pad=0.3)
 
-# plt.savefig("ResNet-mnist.png", dpi=300, bbox_inches="tight")
+plt.savefig("ResNet-mnist.png", dpi=300, bbox_inches="tight")
 plt.savefig("ResNet-mnist.pdf", bbox_inches="tight")
 plt.show()

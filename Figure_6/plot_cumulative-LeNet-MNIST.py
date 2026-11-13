@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 
 # CSV files
 files = {
-    "DeepThings": "layer_times-proposed-lenet-mnist.csv",
-    "EdgeFlow": "layer_times-deepthings-lenet-mnist.csv",
-    "Proposed": "layer_times-edgeflow-lenet-mnist.csv"
+    "DeepThings": "layer_times-deepthings-lenet-mnist.csv",
+    "EdgeFlow": "layer_times-edgeflow-lenet-mnist.csv",
+    "Proposed": "layer_times-proposed-lenet-mnist.csv"
 }
 
 
@@ -43,16 +43,15 @@ for (label, file), color in zip(files.items(), colors):
         label=label
     )
 
-# horizontal line at y = 60
-ax.axhline(y=65, linestyle='--', linewidth=1, color='black')
+ax.axhline(y=40, linestyle='--', linewidth=1, color='black')
 
 ax.set_xticks(x)
 ax.set_xlabel("Layer Number")
 ax.set_ylabel("Cumulative P99 (ms)")
-ax.legend(frameon=True, loc="upper left")
+ax.legend(frameon=True, loc="lower right")
 
 plt.tight_layout(pad=0.3)
 
-# plt.savefig("LeNet-MNIST.png", dpi=300, bbox_inches="tight")
+plt.savefig("LeNet-MNIST.png", dpi=300, bbox_inches="tight")
 plt.savefig("LeNet-MNIST.pdf", bbox_inches="tight")
 plt.show()

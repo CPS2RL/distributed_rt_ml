@@ -43,13 +43,12 @@ for (label, file), color in zip(files.items(), colors):
         label=label
     )
 
-# horizontal line at y = 60
 ax.axhline(y=65, linestyle='--', linewidth=1, color='black')
 
 ax.set_xticks(x)
 ax.set_xlabel("Layer Number")
 ax.set_ylabel("Cumulative P99 (ms)")
-ax.legend(frameon=True, loc="upper left")
+ax.legend(frameon=True, loc="lower right")
 
 plt.tight_layout(pad=0.3)
 

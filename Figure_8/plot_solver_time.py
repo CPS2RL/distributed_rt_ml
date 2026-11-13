@@ -17,7 +17,7 @@ models = {
     "MobileNetV1_0.25": ("MobileNetV1-0.25", "#009E73")
 }
 
-styles = {"BW": "-", "RGB": "--"}
+styles = {"MNIST": "-", "CIPHAR-10": "--"}
 
 # Read CSV
 with open(SWEEP_FILE, newline="") as f:

@@ -52,7 +52,7 @@ ax.axhline(y=6000, linestyle='--', linewidth=1, color='black')
 ax.set_xticks([1, 5, 10, 15, 20, 25, 30])
 ax.set_xlabel("Layer Number")
 ax.set_ylabel("Cumulative P99 (ms)")
-ax.legend(frameon=True, loc="lower right")
+ax.legend(frameon=True, loc="upper left")
 
 plt.tight_layout(pad=0.3)
 
