@@ -11,7 +11,7 @@ def main():
     p = argparse.ArgumentParser(description="Sweep K and export every Top-K path")
     p.add_argument("--config", default="experiment_config.json")
     p.add_argument("--model", default=None)
-    p.add_argument("--mode", choices=["BW", "RGB"], default=None)
+    p.add_argument("--mode", choices=["MNIST", "CIPHAR-10"], default=None)
     args = p.parse_args()
 
     cfg, directory = load_config(args.config)

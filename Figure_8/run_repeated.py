@@ -85,7 +85,7 @@ if __name__ == "__main__":
     parser.add_argument("--runs", type=int, default=100)
     parser.add_argument("--model", default=None,
                         help="Optional: LeNet5, ResNet20, MobileNetV1_0.25")
-    parser.add_argument("--mode", choices=["BW", "RGB"], default=None)
+    parser.add_argument("--mode", choices=["MNIST", "CIPHAR-10"], default=None)
     parser.add_argument("--show-paths", action="store_true",
                         help="Also print every saved layer/device partition")
     run(parser.parse_args())

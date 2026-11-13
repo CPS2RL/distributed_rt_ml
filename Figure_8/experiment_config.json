@@ -1,7 +1,7 @@
 {
   "input_size": [96, 96],
   "devices": 3,
-  "input_modes": {"BW": 1, "RGB": 3},
+  "input_modes": {"MNIST": 1, "CIPHAR-10": 3},
   "classifiers_to_run": ["original_10class"],
   "single_k": 51,
   "k_start": 1,
