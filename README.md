@@ -1,14 +1,27 @@
 # Figure 6
+
 ```
-cd DeepThings\LeNet-Ciphar
+Model_Name = {LeNet-Ciphar,LeNet-MNIST,MobileNet-Ciphar,MobileNet-MNIST,ResNet-Ciphar,ResNet-MNIST}
+
+Directory_Name = {DeepThings, EdgeFlow, Proposed}
+```
+
+For each Model Name and Directory Name run the following:
+
+
+```
+cd <Directory_Name>\<Model_Name>
 
 idp.py build
 idf.py COM10 flash
 idf.py COM11 flash
 idf.py COM9 flash
 idf.py COM9 monitor
+```
 
-python plot_cumulative-LeNet-Ciphar.py
+Save the output as a log file plot the execution time. Or instead, run the plotting codes
+```
+python plot_cumulative-<Directory_Name>-<Model_Name>.py
 ```
 
 # Figure 7
