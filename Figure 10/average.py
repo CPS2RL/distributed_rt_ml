@@ -6,9 +6,7 @@ from collections import defaultdict
 # CONFIGURATION
 # ============================================================
 
-DATA_DIR = Path(
-    r"C:\Users\m.fatin\Downloads\logs-20261113T184312Z-1-001\Data"
-)
+DATA_DIR = Path(".\Data")
 
 OUTPUT_FILE = DATA_DIR / "average_compute_time.csv"
 
