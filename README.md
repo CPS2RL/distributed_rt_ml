@@ -44,6 +44,14 @@ gz sim -r -v 3 five_camera_warehouse.sdf
 ```
 Terminal 2
 ```
-OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python five_camera_sorter.py
+OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python run_script.py
 ```
+Then to average the execution time per task run
 
+```
+python average.py
+```
+and plot the execution time by
+```
+python arrival_execution.py
+```
