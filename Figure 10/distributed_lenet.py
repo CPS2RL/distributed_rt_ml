@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import json
 import math
 import time
@@ -37,8 +38,8 @@ def load_config(filename):
                   'independent': check_partition('independent.pool2_rows',
                                                  data['independent']['pool2_rows'], 5)}
     for layer in ORDER:
-        partitions[layer] = check_partition(f'halo.{layer}_rows',
-                                             data['halo'][f'{layer}_rows'], HEIGHTS[layer])
+        partitions[layer] = check_partition(f'dependent.{layer}_rows',
+                                             data['dependent'][f'{layer}_rows'], HEIGHTS[layer])
     extra = data['independent'].get('extra_context_rows', 0)
     if type(extra) is not int or extra < 0 or extra % 4 != 0:
         raise ValueError('independent.extra_context_rows must be a nonnegative multiple of 4')
@@ -113,7 +114,7 @@ class DistributedLeNet:
             view = tensor[:, :, lo-a:hi-a, :]
             parts.append(self._transfer(dev, src, view, layer, messages, cost))
         if sum(v.shape[2] for v in parts) != stop-start:
-            raise AssertionError(f'Incomplete halo input for {layer}, device {dev+1}')
+            raise AssertionError(f'Incomplete dependent input for {layer}, device {dev+1}')
         return torch.cat(parts, dim=2) if len(parts) > 1 else parts[0]
 
     def _common_fc(self, pieces, device_compute, layer_events):
@@ -130,8 +131,8 @@ class DistributedLeNet:
 
     def execute(self, image, method):
         """image: [1,3,32,32]. Returns exact LeNet logits and measurements."""
-        if method not in ('independent', 'halo'):
-            raise ValueError('method must be independent or halo')
+        if method not in ('independent', 'dependent'):
+            raise ValueError('method must be independent or dependent')
         if tuple(image.shape) != (1, 3, 32, 32):
             raise ValueError('Expected a single RGB input [1,3,32,32]')
         beginning = time.perf_counter()
@@ -202,7 +203,7 @@ class DistributedLeNet:
                 current = []
                 cost = self._new_cost()
                 assembled = []
-                # Gather required input halos from the preceding disjoint
+                # Gather required input dependents from the preceding disjoint
                 # output shards, then pay the link delay BEFORE computing.
                 for dev, (a, b) in enumerate(self.rows[name]):
                     lo, hi = self._needed_input(name, a, b)
@@ -255,7 +256,7 @@ class DistributedLeNet:
                     if e['device'] == d and e['layer'] != 'merge_fc')
                 for d in range(1, 6)) + fc_ms
         else:
-            # Halo creates one synchronization barrier at each stage.
+            # dependent creates one synchronization barrier at each stage.
             parallel_compute_ms = sum(
                 max(e['compute_ms'] for e in layer_events if e['layer'] == stage)
                 for stage in ORDER) + fc_ms
@@ -280,7 +281,7 @@ def verify_equivalence(net, config):
         x = torch.rand(1, 3, 32, 32)
         with torch.inference_mode():
             reference = net(x)
-            for method in ('independent', 'halo'):
+            for method in ('independent', 'dependent'):
                 out = engine.execute(x, method)
                 err = (reference-out['logits']).abs().max().item()
                 if not torch.allclose(reference, out['logits'], atol=2e-5, rtol=2e-5):

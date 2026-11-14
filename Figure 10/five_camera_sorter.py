@@ -1,27 +1,10 @@
 #!/usr/bin/env python3
-"""Five-camera stop-and-pick Gazebo Sim sorter (Harmonic / Jetty; no ROS 2).
+"""
 
     python five_camera_sorter.py world
     gz sim -r -v 3 five_camera_warehouse.sdf
-    python five_camera_sorter.py run --count 30
-    python five_camera_sorter.py run --count 10 --slow-camera 5 --slow-ms 260
-    python five_camera_sorter.py selftest
 
-Each arriving product receives ONE RGB frame from each of five Gazebo cameras.
-All five LeNet-5 tasks are submitted after the batch is captured. A strict
-200 ms wall-clock deadline begins together with the object's 200 ms nominal
-camera-to-robot trip. On-time result: the object reaches the robot, the belt
-STOPS, and the robot picks and drops the object and RETURNS HOME. Only then
-are camera processing and new conveyor arrivals enabled for the next object.
-Late/no-frame products continue off the belt; they are never picked.
 
-One object at a time is deliberate. New objects are released at least 2 s
-apart when running; pausing for the robot may increase the real interval.
-Gazebo camera sensors still render, but the Python controller discards their
-frames outside each object's inspection window.
-
-The articulated robot is kinematically animated; gripping is not achieved
-by contact forces or a joint-actuated physics solver.
 """
 import argparse
 import csv
@@ -44,12 +27,12 @@ POSE_SERVICE_TIMEOUT_MS = 1800  # slow VMs get longer to answer
 CAPTURE_TIMEOUT = 1.60          # gather all five frames AFTER Gazebo confirms position
 POSE_ACK_TIMEOUT = 5.0            # service confirmation before classifying image frames
 CAPTURE_SETTLE = 0.30             # wait for a fresh rendered frame after pose confirmation
-DEADLINE_SECONDS = 0.200        # strict processing + voting + controller delivery deadline
+DEADLINE_SECONDS = 0.010       # strict processing + voting + controller delivery deadline
 START_X = -2.20
 CAMERA_X = -0.95                # all five cameras observe the SAME item here
 PICK_X = 0.85
 APPROACH_SPEED = 2.5           # m/s into inspection station
-FAST_TRAVEL_SECONDS = DEADLINE_SECONDS   # exactly 200 ms nominal camera -> robot
+FAST_TRAVEL_SECONDS = DEADLINE_SECONDS   # exactly DEADLINE_SECONDS ms nominal camera -> robot
 FAST_SPEED = (PICK_X - CAMERA_X) / FAST_TRAVEL_SECONDS  # 9.0 m/s
 BELT_END_X = 2.68              # if not picked, product continues past robot and falls
 BELT_Z = 0.53                 # center of each 0.15-m object
@@ -346,10 +329,8 @@ def selftest():
 
 
 def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
-                     save_captures=False, method='vote', config_path=None):
+                     method='vote', config_path=None):
     import numpy as np
-    import struct
-    import zlib
     import torch
     from torch import nn
     from torch.nn import functional as F
@@ -516,20 +497,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
             return None
         return a.reshape(h, w, n)[:, :, :3].copy()
 
-    def save_png(name, frame):
-        # Small lossless RGB debug image, no Pillow dependency.
-        directory = ROOT / 'captures'
-        directory.mkdir(exist_ok=True)
-        h, w = frame.shape[:2]
-        raw = b''.join(b'\x00' + frame[row].tobytes() for row in range(h))
-        def chunk(tag, data):
-            return (struct.pack('>I', len(data)) + tag + data +
-                    struct.pack('>I', zlib.crc32(tag + data) & 0xffffffff))
-        content = (b'\x89PNG\r\n\x1a\n' +
-                   chunk(b'IHDR', struct.pack('>IIBBBBB', w, h, 8, 2, 0, 0, 0)) +
-                   chunk(b'IDAT', zlib.compress(raw, 4)) + chunk(b'IEND', b''))
-        (directory / name).write_bytes(content)
-
     background = {}
 
     def foreground_mask(frame, blank):
@@ -689,50 +656,8 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
         pose(vec, 'finger_left', (target[0], target[1]-sep, target[2]+.013))
         pose(vec, 'finger_right', (target[0], target[1]+sep, target[2]+.013))
 
-    def stamp(t, t0):
-        return '' if t is None else f'{t-t0:.4f}'
-
     def num(v, digits=3):
         return '' if v is None else f'{v:.{digits}f}'
-
-    def sort_row(p, t0):
-        elapsed = None
-        if p.get('robot_at') is not None and p.get('dispatch_at') is not None:
-            elapsed = 1000 * (p['robot_at'] - p['dispatch_at'])
-        vote_ms = None
-        if p.get('vote_sent_at') is not None:
-            vote_ms = 1000 * (p['vote_sent_at']-p['dispatch_at'])
-        return [p['name'], p['true'], p.get('decision', ''), p.get('outcome', ''),
-                len(p['captures']), len(p['results']),
-                stamp(p.get('spawn_at'), t0), stamp(p.get('dispatch_at'), t0),
-                stamp(p.get('robot_at'), t0), stamp(p.get('grasp_at'), t0),
-                stamp(p.get('drop_at'), t0), stamp(p.get('sorted_at'), t0),
-                num(elapsed), num(vote_ms),
-                num(1000*(p['pose_ack_at']-p['inspection_request_at'])
-                    if p.get('pose_ack_at') else None),
-                stamp(p.get('pause_at'), t0), stamp(p.get('home_at'), t0),
-                num(1000*(p['home_at']-p['pause_at'])
-                    if p.get('home_at') is not None and p.get('pause_at') is not None
-                    else None)]
-
-    def processing_row(p, t0):
-        results = p['results']
-        end_to_end = lambda i: (1000 * (results[i]['ended_at'] - p['dispatch_at'])
-                                 if i in results and p.get('dispatch_at') is not None else None)
-        return ([p['name'], p['true'], p.get('outcome', ''),
-                 p.get('decision', ''), stamp(p.get('dispatch_at'), t0),
-                 DEADLINE_SECONDS*1000, len(p['captures']),
-                 len(results), num(p.get('capture_spread_ms'))]
-                + [num(results[i]['processing_ms']) if i in results else '' for i in range(5)]
-                + [num(results[i]['cnn_ms']) if i in results else '' for i in range(5)]
-                + [num(end_to_end(i)) for i in range(5)]
-                + [results[i]['prediction'] if i in results and p.get('method') == 'vote' else ''
-                   for i in range(5)]
-                + [num(1000*(p['vote_sent_at']-p['dispatch_at']))
-                   if p.get('vote_sent_at') is not None else '',
-                   'yes' if p.get('vote_sent_at') is not None
-                   and p['vote_sent_at'] <= p['deadline_at'] else 'no',
-                   'yes' if p.get('decision') == p['true'] else 'no'])
 
     print('[CAMERAS] Waiting for five EMPTY-background camera images...')
     background_deadline = time.monotonic() + 35.0
@@ -752,56 +677,16 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
     camera_accept.clear()
     print('\n[CAMERAS] Ready. Camera processing pauses between objects.')
 
-    # File rows are flushed continuously, even when a product misses the arm.
-    with (ROOT/'camera_votes.csv').open('w', newline='') as vote_file, \
-         (ROOT/'sort_log.csv').open('w', newline='') as sort_file, \
-         (ROOT/'object_processing_times.csv').open('w', newline='') as timing_file, \
-         (ROOT/'distributed_object_times.csv').open('w', newline='') as dist_file, \
-         (ROOT/'distributed_layer_times.csv').open('w', newline='') as layers_file, \
-         (ROOT/'distributed_messages.csv').open('w', newline='') as messages_file, \
+    # The only CSV log produced by this controller.
+    # Keep the executor open for the entire run and flush each completed object.
+    with (ROOT / 'distributed_object_times.csv').open('w', newline='') as dist_file, \
          ThreadPoolExecutor(max_workers=worker_count, thread_name_prefix='lenet_camera') as workers:
-        vote_csv, sort_csv, timing_csv = (csv.writer(vote_file), csv.writer(sort_file),
-                                         csv.writer(timing_file))
-        vote_csv.writerow(['product', 'camera', 'position', 'prediction', 'confidence',
-                           'cnn_ms', 'processing_ms', 'queue_ms',
-                           'completion_after_capture_ms', 'completed_before_deadline',
-                           'matches_true_color', 'error'])
-        sort_csv.writerow(['product', 'true_color', 'voted_color', 'result',
-                           'frames_captured', 'tasks_completed', 'arrival_s', 'dispatch_s',
-                           'robot_arrival_s', 'grasp_s', 'drop_s', 'finished_s',
-                           'camera_to_robot_ms', 'decision_latency_ms',
-                           'inspection_pose_ack_ms', 'belt_paused_s',
-                           'arm_home_s', 'belt_pause_ms'])
-        timing_csv.writerow(['product', 'true_color', 'result', 'voted_color',
-                             'dispatch_s', 'deadline_ms', 'frames_captured',
-                             'tasks_completed', 'camera_frame_spread_ms']
-                            + [f'camera{i}_processing_ms' for i in range(1,6)]
-                            + [f'camera{i}_cnn_ms' for i in range(1,6)]
-                            + [f'camera{i}_completion_ms' for i in range(1,6)]
-                            + [f'camera{i}_prediction' for i in range(1,6)]
-                            + ['vote_and_send_ms', 'within_deadline', 'vote_correct'])
-        dist_csv = csv.DictWriter(dist_file, fieldnames=[
-            'product', 'method', 'true_color', 'prediction', 'result',
-            'camera_count', 'preprocess_ms', 'device1_compute_ms', 'device2_compute_ms',
-            'device3_compute_ms', 'device4_compute_ms', 'device5_compute_ms',
-            'total_compute_ms', 'fc_merge_ms', 'network_bytes', 'network_messages',
-            'network_sum_ms', 'network_critical_ms', 'modeled_parallel_ms',
-            'measured_distributed_ms', 'worker_queue_ms', 'decision_latency_ms',
-            'within_deadline', 'error'])
+        dist_csv = csv.DictWriter(
+            dist_file,
+            fieldnames=['product', 'method', 'true_color', 'total_compute_ms'],
+        )
         dist_csv.writeheader()
-        layer_csv = csv.DictWriter(layers_file, fieldnames=[
-            'product', 'method', 'device', 'layer', 'output_start', 'output_end',
-            'input_start', 'input_end', 'computed_elements', 'compute_ms', 'remote_bytes',
-            'remote_messages', 'communication_ms'])
-        layer_csv.writeheader()
-        message_csv = csv.DictWriter(messages_file, fieldnames=[
-            'product', 'method', 'layer', 'source_device', 'destination_device',
-            'bytes', 'estimated_ms'])
-        message_csv.writeheader()
-        for f in (vote_file, sort_file, timing_file, dist_file, layers_file, messages_file):
-            f.flush()
-        print(f'[WORKERS] {worker_count} CNN worker(s) for 5 camera tasks; '
-              'inference and completion latency are logged separately')
+        dist_file.flush()
 
         all_products = []
         current_job = None
@@ -820,49 +705,36 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
         home_pose_pending = False
         home_job = None
 
-        def record_sort(p):
-            # Never log a pickup as a completed sort. The home ACK may
-            # arrive before the tray has completed its automatic transfer.
-            if p['state'] != 'sorted':
+        def record_processing(p, force=False):
+            """Append one row per object to distributed_object_times.csv."""
+            if p.get('timing_logged'):
                 return
-            if p.get('outcome') == 'sorted' and p.get('home_at') is None:
-                return
-            if not p.get('sort_logged'):
-                sort_csv.writerow(sort_row(p, t0))
-                sort_file.flush()
-                p['sort_logged'] = True
+            if not force:
+                if p['state'] != 'sorted':
+                    return
+                if p.get('outcome') == 'sorted' and p.get('home_at') is None:
+                    return
+                if len(p['results']) != len(p['futures']):
+                    return
 
-        def record_processing(p):
-            if p.get('sort_logged') and not p.get('timing_logged') and \
-                    len(p['results']) == len(p['futures']):
-                timing_csv.writerow(processing_row(p, t0))
-                timing_file.flush()
-                if method != 'vote':
-                    d = p.get('dist_result') or {}
-                    data = d.get('data') or {}
-                    perdev = data.get('device_compute_ms', [None]*5)
-                    dist_csv.writerow({
-                        'product': p['name'], 'method': method,
-                        'true_color': p['true'], 'prediction': d.get('prediction', ''),
-                        'result': p.get('outcome', ''), 'camera_count': len(p['captures']),
-                        'preprocess_ms': num(d.get('preprocess_ms')),
-                        **{f'device{i+1}_compute_ms': num(perdev[i]) for i in range(5)},
-                        'total_compute_ms': num(data.get('sum_compute_ms')),
-                        'fc_merge_ms': num(data.get('fc_ms')),
-                        'network_bytes': data.get('network_bytes', ''),
-                        'network_messages': data.get('network_messages', ''),
-                        'network_sum_ms': num(data.get('network_sum_ms')),
-                        'network_critical_ms': num(data.get('network_critical_ms')),
-                        'modeled_parallel_ms': num(data.get('parallel_estimate_ms')),
-                        'measured_distributed_ms': num(data.get('measured_inference_ms')),
-                        'worker_queue_ms': num(d.get('queue_ms')),
-                        'decision_latency_ms': num(1000*(p['vote_sent_at']-p['dispatch_at'])
-                                                    if p.get('vote_sent_at') else None),
-                        'within_deadline': 'yes' if p.get('vote_sent_at') and
-                             p['vote_sent_at'] <= p['deadline_at'] else 'no',
-                        'error': d.get('error', '')})
-                    dist_file.flush()
-                p['timing_logged'] = True
+            if method == 'vote':
+                # Vote mode runs five separate CNNs; record the sum of their
+                # CNN execution times in the same single CSV for consistency.
+                device_times = [r.get('cnn_ms') for r in p['results'].values()]
+                compute_ms = (sum(t for t in device_times if t is not None)
+                              if any(t is not None for t in device_times) else None)
+            else:
+                data = (p.get('dist_result') or {}).get('data') or {}
+                compute_ms = data.get('sum_compute_ms')
+
+            dist_csv.writerow({
+                'product': p['name'],
+                'method': method,
+                'true_color': p['true'],
+                'total_compute_ms': num(compute_ms),
+            })
+            dist_file.flush()
+            p['timing_logged'] = True
 
         try:
             while True:
@@ -878,8 +750,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                                              state='approach', captures={},
                                              futures={}, results={},
                                              xyz=(START_X, 0, BELT_Z)))
-                    print(f'[ARRIVAL] {name} ({color}), next after >=2 s '
-                          'and only when previous robot cycle is complete')
                     next_spawn = now + ARRIVAL_SECONDS
 
                 # A camera capture is legal ONLY after Gazebo confirms the object
@@ -898,7 +768,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                                 home_job['home_at'] = ack_at
                                 print(f'[ARM HOME] {home_job["name"]}: Gazebo '
                                       'confirmed robot return to home position')
-                                record_sort(home_job)
                                 home_job = None
                             print('[BELT RESUME] Robot home confirmed; next '
                                   'object/camera cycle enabled')
@@ -933,8 +802,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                     if frame is None or not has_object(frame, background[i]):
                         continue
                     candidates[0]['captures'][i] = (frame, ts)
-                    if save_captures:
-                        save_png(f'{candidates[0]["name"]}_cam{i+1}.png', frame)
 
                 # Collect finished tasks without blocking motion or the deadline.
                 for p in all_products:
@@ -963,25 +830,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                             if d.get('prediction'):
                                 p['decision'] = d['prediction']
                                 p['vote_sent_at'] = p['vote_at']  # delivery after main-thread harvest
-                            for e in data.get('layer_events', []):
-                                layer_csv.writerow(dict(
-                                    product=p['name'], method=method,
-                                    device=e['device'], layer=e['layer'],
-                                    output_start=e['start_row'], output_end=e['end_row'],
-                                    input_start=e['input_start'], input_end=e['input_end'],
-                                    computed_elements=e['output_elements'],
-                                    compute_ms=num(e['compute_ms']),
-                                    remote_bytes=e['remote_bytes'],
-                                    remote_messages=e['remote_messages'],
-                                    communication_ms=num(e['communication_ms'])))
-                            layers_file.flush()
-                            for m in data.get('messages', []):
-                                message_csv.writerow(dict(
-                                    product=p['name'], method=method,
-                                    layer=m['layer'], source_device=m['source'],
-                                    destination_device=m['destination'],
-                                    bytes=m['bytes'], estimated_ms=num(m['estimated_ms'])))
-                            messages_file.flush()
                             print(f'[DISTRIBUTED] {p["name"]} [{method}]: '
                                   f'{d.get("prediction") or "no_detection"}; '
                                   f'sum_compute={num(data.get("sum_compute_ms"))} ms, '
@@ -1001,18 +849,7 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                                       'error': str(exc)}
                         p['results'][i] = result
                         elapsed_ms = 1000*(result['ended_at']-p['dispatch_at'])
-                        vote_csv.writerow([p['name'], i+1, CAMERAS[i][0],
-                                           result['prediction'], num(result['confidence'], 4),
-                                           num(result['cnn_ms']), num(result['processing_ms']),
-                                           num(result['queue_ms']), num(elapsed_ms),
-                                           'yes' if result['ended_at'] <= p['deadline_at'] else 'no',
-                                           'yes' if result['prediction'] == p['true'] else 'no',
-                                           result['error']])
-                        vote_file.flush()
-                        print(f'[CAM {i+1}] {p["name"]}: '
-                              f'{result["prediction"] or "no_detection"}, '
-                              f'{num(result["processing_ms"])} ms '
-                              f'({"on-time" if result["ended_at"] <= p["deadline_at"] else "LATE"})')
+
                     # A majority vote requires ALL FIVE results; the outcome is
                     # not allowed to change retroactively after the deadline.
                     if p.get('dispatch_at') is not None and \
@@ -1059,7 +896,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                             p['sorted_at'] = now
                             print(f'[SIM MISS] {p["name"]}: inspection pose NOT confirmed '
                                   f'within {POSE_ACK_TIMEOUT:g}s; no classification attempted')
-                            record_sort(p)
                     elif state == 'capture':
                         p['xyz'] = (CAMERA_X, 0, BELT_Z)
                         if len(p['captures']) == 5 or now-p['capture_wait_at'] >= CAPTURE_TIMEOUT:
@@ -1119,7 +955,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                             p['state'] = 'sorted'
                             p['sorted_at'] = now
                             print(f'[FELL] {p["name"]}: reached the floor at belt end')
-                            record_sort(p)
                     elif state == 'gripped':
                         p['xyz'] = tool
                     elif state == 'dropping':
@@ -1145,7 +980,6 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                             p['sorted_at'] = now
                             p['outcome'] = 'sorted'
                             print(f'[SORTED] {p["name"]} -> {p["decision"]}')
-                            record_sort(p)
 
                 # A product is never queued beyond its pickup point. If the
                 # arm is busy at that instant, it is marked missed above.
@@ -1230,31 +1064,25 @@ def start_controller(count, slow_camera=0, slow_ms=0., worker_count=1,
                           f'misses={misses} belt={"STOPPED" if belt_paused else "RUNNING"}')
                 if produced >= count and all(p['state'] == 'sorted' and
                          p.get('timing_logged') for p in all_products):
-                    print('[DONE] All products finished and all camera timings logged.')
+                    print('[DONE] All products finished; saved distributed_object_times.csv.')
                     break
         except KeyboardInterrupt:
-            print('\n[STOP] Saving camera timings collected so far.')
+            print('\n[STOP] Saving available object timings to distributed_object_times.csv.')
         finally:
             pose_stop.set()
             thread_pose.join(timeout=POSE_SERVICE_TIMEOUT_MS/1000 + .35)
             print(f'[POSE STATUS] sent={pose_stats["sent"]} '
                   f'failures={pose_stats["failed"]}')
-            # If stopped mid-run, record results available at that time.
+            # Record available timings for incomplete objects on interruption.
             for p in all_products:
-                if not p.get('sort_logged'):
-                    if not p.get('outcome'):
-                        p['outcome'] = 'interrupted'
-                    record_sort(p)
-                if not p.get('timing_logged') and p.get('dispatch_at') is not None:
-                    timing_csv.writerow(processing_row(p, t0))
-            for f in (vote_file, sort_file, timing_file, dist_file, layers_file, messages_file):
-                f.flush()
+                record_processing(p, force=True)
+            dist_file.flush()
 
 
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument('mode', choices=['world', 'run', 'selftest'])
-    cli.add_argument('--method', choices=('vote', 'independent', 'halo'), default='vote',
+    cli.add_argument('--method', choices=('vote', 'independent', 'dependent'), default='vote',
                      help='vote=original 5 separate CNNs; other modes=one distributed CNN')
     cli.add_argument('--config', default=str(ROOT/'partition_config.json'),
                      help='five-device row partition and link configuration (JSON)')
@@ -1262,8 +1090,6 @@ def main():
                      help=f'number of products, 1..{POOL_SIZE} (default 10)')
     cli.add_argument('--workers', type=int, choices=(1, 2, 3, 4, 5), default=1,
                      help='CNN workers: 1 for small VMs, 5 for concurrent tasks')
-    cli.add_argument('--save-captures', action='store_true',
-                     help='save accepted 64x64 camera images as PNG for debugging')
     cli.add_argument('--pool-info', action='store_true',
                      help='show the number of products pre-created in the world')
     cli.add_argument('--slow-camera', type=int, choices=range(0, 6), default=0,
@@ -1295,7 +1121,7 @@ def main():
         print('[SELFTEST] Both partitioned LeNet methods match full model output.')
     else:
         start_controller(args.count, args.slow_camera, args.slow_ms,
-                         args.workers, args.save_captures, args.method, args.config)
+                         args.workers, args.method, args.config)
 
 
 if __name__ == '__main__':
