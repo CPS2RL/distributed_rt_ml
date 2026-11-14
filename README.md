@@ -1,5 +1,5 @@
 
-<img width="795" height="683" alt="2026-11-09T13_52_20 125061901" src="https://github.com/user-attachments/assets/d498593b-18e4-40e8-820e-a56d2ea786d7" />
+<img width="600" height="399" alt="2026-11-09T13_52_20 125061901" src="https://github.com/user-attachments/assets/62cdd366-d04c-416f-9b2c-4f72bc67d8c9" />
 
 
 # Figure 6
