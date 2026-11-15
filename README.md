@@ -7,7 +7,55 @@ Distributed Deep Learning Inference under Real-Time Constraint
 - [Algorithm Comparison](#figure-8) 
 - [Warehouse Simulation](#figure-10) 
 
+# Environment Setup
+## ESP-IDF 
+### Installation (Windows)
+Download and install ESP-IDF Installation Manager from https://dl.espressif.com/dl/eim/
+### Connect the ESP32 Devices
+Open the IDF PowerShell and run the following command to list the COM ports of the attached devices
+```
+python -m serial.tools.list_ports
+```
 
+> COM9
+> COM10
+> COM11
+> COM12
+
+### Build and Flash the Application
+Build the project and flash the application onto the three devices:
+```
+cd ~\Figure_6\DeepThings\LeNet-MNIST
+idf.py set-target esp32
+idf.py build
+
+idf.py -p COM10 flash
+idf.py -p COM11 flash
+idf.py -p COM9 flash
+```
+Monitor the output from the designated device:
+```
+idf.py -p COM9 monitor
+```
+Press `Ctrl+]` to exit the serial monitor.
+
+## Gazebo Installation
+Install Gazebo Harmonic (LTS) on top of Ubuntu 24.04.
+Add the Gazebo Repository
+```
+sudo apt update && sudo apt install software-properties-common
+sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" > /etc/apt/sources.list.d/gazebo-stable.list'
+wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+sudo apt update
+sudo apt install -y gz-harmonic
+gz sim --versions
+```
+
+### Verify the Warehouse Simulation
+```
+cd ~/Figure_10
+gz sim -r -v 3 five_camera_warehouse.sdf
+```
 
 # Figure 6
 
