@@ -57,6 +57,13 @@ cd ~/Figure_10
 gz sim -r -v 3 five_camera_warehouse.sdf
 ```
 
+## Python Virtual Environment
+```
+sudo apt install -y python3 python3-pip python3-venv
+
+python3 -m venv .venv
+```
+
 # Figure 6
 
 This experiment compares the execution time of the three CNN inference methods (DeepThings, EdgeFlow Proposed) covering three types of architecture (LeNet, MobileNet and ResNet) trained using two types of dataset (using the MNIST and CIFAR-10). The goal of this experiment is to evaluate the execution time of different CNN architectures for different types of workload.
@@ -106,12 +113,20 @@ python plot_cumulative-<Directory_Name>-<Model_Name>.py
 ```
 
 # Figure 7
+
+This evaluation covers the workload distribution of the CNN inference methods. The workload distribution is visualized using heatmaps.  Each cell represents the computational workload assigned to a particular device at a specific network layer. An uniform distribution indicates better load balancing.
+
 ```
 python workload.py
 python plotheat.py
 ```
 
+The result presents a layer-by-layer visualization of the computational workload distribution across ten devices. 
+
 # Figure 8
+
+This evaluation compares the solution quality and computational overhead of the proposed method and a heuristic method. The experiment focuses on two evaluation metrics: optimality gap and solver execution time. A smaller optimality gap indicates that the heuristic algorithm produces a solution closer to the proposed method.
+
 ```
 python run_repeated.py
 python plot_optimality_gap.py
@@ -120,23 +135,30 @@ python plot solver_time.py
 
 # Figure 10
 
+In this evaluation, we have simulated a warehouse environment. We used Gazebo to simulate a warehouse with five cameras. In this evaluation we analyzed the execution time of inference tasks.
+
 <img width="600" height="399" alt="2026-11-09T13_52_20 125061901" src="https://github.com/user-attachments/assets/62cdd366-d04c-416f-9b2c-4f72bc67d8c9" />
 
 
-Terminal 1
+## Launch the Warehouse Simulation
+In terminal 1, run the following: 
 ```
 gz sim -r -v 3 five_camera_warehouse.sdf
 ```
-Terminal 2
+
+## Execute the Inference Experiment
+In terminal 2, run the following:
 ```
+source .venv/bin/activate
+
 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python run_script.py
 ```
-Then to average the execution time per task run
+After completing the inference experiment, calculate the average execution time for each task by running:
 
 ```
 python average.py
 ```
-and plot the execution time by
+To visualize the relationship between task arrival times and execution times, run:
 ```
 python arrival_execution.py
 ```
