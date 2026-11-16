@@ -59,18 +59,40 @@ gz sim -r -v 3 five_camera_warehouse.sdf
 
 # Figure 6
 
-```
-Model_Name = {LeNet-Ciphar,LeNet-MNIST,MobileNet-Ciphar,MobileNet-MNIST,ResNet-Ciphar,ResNet-MNIST}
+This experiment compares the execution time of the three CNN inference methods (DeepThings, EdgeFlow Proposed) covering three types of architecture (LeNet, MobileNet and ResNet) trained using two types of dataset (using the MNIST and CIFAR-10). The goal of this experiment is to evaluate the execution time of different CNN architectures for different types of workload.
 
-Directory_Name = {DeepThings, EdgeFlow, Proposed}
+## Experimental Configurations
+
+- Methods: DeepThings, EdgeFlow, Proposed
+- Models: LeNet5, MobileNetV1-0.25, ResNet20
+- Datasets: MNIST, CIFAR-10
+- Hardware: ESP32 devices
+
+Each method is evaluated using six combinations which covers 18 experimental configurations.
+
+## Evaluation
+
+Open IDF PowerShell and navigate to the desired method and model directory.
+
+> Model_Name = {LeNet-Ciphar,LeNet-MNIST,MobileNet-Ciphar,MobileNet-MNIST,ResNet-Ciphar,ResNet-MNIST}
+
+> Directory_Name = {DeepThings, EdgeFlow, Proposed}
+
 ```
+cd <Directory_Name>\<Model_Name>
+```
+
+For example,
+
+```
+cd DeepThings\LeNet-Ciphar
+```
+## Build and Flash the Application
 
 For each Model Name and Directory Name run the following:
 
 
 ```
-cd <Directory_Name>\<Model_Name>
-
 idp.py build
 idf.py COM10 flash
 idf.py COM11 flash
