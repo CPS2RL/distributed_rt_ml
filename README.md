@@ -66,7 +66,7 @@ sudo apt install -y python3 python3-pip python3-venv
 python3 -m venv .venv
 ```
 
-# Figure 6
+# Execution Time Comparison
 
 This experiment compares the execution time of the three CNN inference methods (DeepThings, EdgeFlow Proposed) covering three types of architecture (LeNet, MobileNet and ResNet) trained using two types of dataset (using the MNIST and CIFAR-10). The goal of this experiment is to evaluate the execution time of different CNN architectures for different types of workload.
 
@@ -114,7 +114,7 @@ Save the output as a log file plot the execution time. Or instead, run the plott
 python plot_cumulative-<Directory_Name>-<Model_Name>.py
 ```
 
-# Figure 7
+# Workload Distribution
 
 This evaluation covers the workload distribution of the CNN inference methods. The workload distribution is visualized using heatmaps.  Each cell represents the computational workload assigned to a particular device at a specific network layer. An uniform distribution indicates better load balancing.
 
@@ -125,7 +125,7 @@ python plotheat.py
 
 The result presents a layer-by-layer visualization of the computational workload distribution across ten devices. 
 
-# Figure 8
+# Algorithm Comparison
 
 This evaluation compares the solution quality and computational overhead of the proposed method and a heuristic method. The experiment focuses on two evaluation metrics: optimality gap and solver execution time. A smaller optimality gap indicates that the heuristic algorithm produces a solution closer to the proposed method.
 
@@ -135,7 +135,7 @@ python plot_optimality_gap.py
 python plot solver_time.py
 ```
 
-# Figure 10
+# Warehouse Simulation
 
 In this evaluation, we have simulated a warehouse environment. We used Gazebo to simulate a warehouse with five cameras. In this evaluation we analyzed the execution time of inference tasks.
 
