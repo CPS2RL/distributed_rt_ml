@@ -2,10 +2,10 @@ Distributed Deep Learning Inference under Real-Time Constraint
 ==============
 
 ##### Table of Contents  
-- [Execution Time Comparison](#figure-6)  
-- [Workload Distribution](#figure-7) 
-- [Algorithm Comparison](#figure-8) 
-- [Warehouse Simulation](#figure-10) 
+- [Execution Time Comparison](#execution-time-comparison)  
+- [Workload Distribution](#workload-distribution) 
+- [Algorithm Comparison](#algorithm-comparison) 
+- [Warehouse Simulation](#warehouse-simulation) 
 
 # Environment Setup
 ## ESP-IDF 
@@ -25,7 +25,7 @@ python -m serial.tools.list_ports
 ### Build and Flash the Application
 Build the project and flash the application onto the three devices:
 ```
-cd ~\Figure_6\DeepThings\LeNet-MNIST
+cd ~\Execution_Time_Compariso\DeepThings\LeNet-MNIST
 idf.py set-target esp32
 idf.py build
 
@@ -53,7 +53,7 @@ gz sim --versions
 
 ### Verify the Warehouse Simulation
 ```
-cd ~/Figure_10
+cd ~/Warehouse_Simulation
 gz sim -r -v 3 five_camera_warehouse.sdf
 ```
 
