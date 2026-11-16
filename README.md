@@ -1,6 +1,8 @@
 Distributed Deep Learning Inference under Real-Time Constraint
 ==============
 
+https://anonymous.4open.science/r/distributed_rt_ml-7C5F/
+
 ##### Table of Contents  
 - [Execution Time Comparison](#execution-time-comparison)  
 - [Workload Distribution](#workload-distribution) 
