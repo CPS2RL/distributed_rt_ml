@@ -5,5 +5,4 @@ set(EXPERIMENT_MODEL "mobilenetv1_025")
 set(EXPERIMENT_DATASET "mnist")
 set(EXPERIMENT_RUNS 50)
 
-# Set ON to print a second line with synchronized halo exchange overhead.
 set(EXPERIMENT_REPORT_HALO_TIME ON)

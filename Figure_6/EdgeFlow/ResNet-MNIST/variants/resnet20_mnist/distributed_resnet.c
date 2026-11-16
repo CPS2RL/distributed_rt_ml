@@ -6,10 +6,6 @@
  * Stage 2 and 3 start with stride 2 and a fused 1x1 projection shortcut.
  * GAP over each device's owned rows of the last 7x7x64 map, then shared FC.
  *
- * All C activation tensors are HWC and keep only the assigned global rows.
- * Convolution reads zeros for rows outside the local stripe (zero-halo).
- * Three reused scratch buffers ~52.5KiB total. Weights remain in flash.
- * Non-reentrant: only one inference call per ESP32 at a time.
  */
 #include "distributed_resnet.h"
 #include <string.h>

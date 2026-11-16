@@ -21,7 +21,6 @@ int halo_prepare(const HaloSpec *s);
  */
 const float *halo_row(const float *local, int global_row,
                       int first, int last, int width, int channels);
-/* Diagnostics provided by coordinator; halo_us[step] is radio+barrier time. */
 uint32_t halo_step_us(int step);
 void halo_begin_run(int run_id);
 #endif

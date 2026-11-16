@@ -1,8 +1,3 @@
-/* Three-ESP32 layer execution benchmark, all six CNN/dataset choices.
- * Shared firmware on each board, WITH intermediate FP32 halo exchange.
- * COM3 coordinator displays ONLY per-run per-layer maxima in milliseconds.
- * Times are local computation times (not Wi-Fi/ESP-NOW time).
- */
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
@@ -73,7 +68,6 @@
 #else
 #define CHUNK_ROWS 2
 #endif
-/* Use 192 bytes for both RGB row chunks and up to 32 layer timings. */
 #define PAYLOAD_BYTES 192
 
 /* All physical and model layer boundaries live in partition_config.h. */
@@ -213,7 +207,7 @@ static bool authentic_source(const rx_event_t *ev, int id)
     return id >= 0 && id < 3 && memcmp(ev->source_mac, MACS[id], 6) == 0;
 }
 
-/* Setup/data use stop-and-wait ACKs; image transfers are not timed. */
+/* Setup/data use stop-and-wait ACKs; */
 static bool send_and_confirm(int worker, const packet_t *p, size_t length,
                              uint8_t ack_type, uint32_t expected_hash)
 {
@@ -266,8 +260,6 @@ static bool distribute_input(void)
  * All three nodes call halo_prepare() at identical operation steps. Workers
  * signal readiness. COM3 then fetches ONLY source rows required by another
  * output stripe and forwards the exact FP32 data to the consuming worker.
- * GET/FRAGMENT and SET/ACK are stop-and-wait and chunk each row <=192 bytes.
- * Communication/barrier time is kept separate from compute layer timings.
  */
 #define HALO_H_MAX 32
 #define HALO_RADIO_ATTEMPTS 100
@@ -577,7 +569,7 @@ int halo_prepare(const HaloSpec *s)
     s_halo_us[s->step]=(uint32_t)(esp_timer_get_time()-begun);
     return result;
 }
-/* ------------------- END OF HALO TRANSPORT ------------------------------ */
+/* ------------------- END OF DEPENDENT DATA TRANSPORT ------------------------------ */
 
 static void send_worker_ack(uint8_t ack_type, const packet_t *request,
                             uint32_t checksum)
@@ -740,7 +732,7 @@ static void coordinator_task(void)
     make_input();
     memcpy(s_local, s_full_image, local_bytes(0));
     if (!distribute_input()) {
-        fprintf(stderr, "ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.\n");
+        fprintf(stderr, "ERROR: input transfer failed; verify COM and selected model/dataset.\n");
         return;
     }
     uint32_t layer_times[3][MAX_TIMED_LAYERS] = {{0}};
@@ -757,21 +749,11 @@ static void coordinator_task(void)
             return;
         }
         print_maximum_per_layer(run, layer_times);
-#if EXP_REPORT_HALO
-        printf("halo exchange time of layers (ms): {");
-        for (int layer = 0; layer < selected_model_layers(); ++layer) {
-            printf("%s%s: %.3f", layer ? ", " : "",
-                   selected_model_layer_name(layer),
-                   (double)halo_step_us(layer) / 1000.0);
-        }
-        printf("}\n");
-        fflush(stdout);
-#endif
     }
 }
 void app_main(void)
 {
-    esp_log_level_set("*", ESP_LOG_NONE);   /* suppress application Wi-Fi logging */
+    esp_log_level_set("*", ESP_LOG_NONE);   
     s_id = recognize_device();
     if (s_id < 0) {
         fprintf(stderr, "ERROR: unassigned ESP32 MAC.\n");

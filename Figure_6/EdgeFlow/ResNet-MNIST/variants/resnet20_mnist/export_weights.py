@@ -1,15 +1,4 @@
-"""Export the exact ResNet20 from train_six_cnns.py into one ESP-IDF header.
 
-Run from the ESP-IDF project root:
-    python tools/export_weights.py --pth "../models/resnet20_mnist.pth"
-
-This script accepts a PyTorch .pth checkpoint, NOT a previously generated .h file.
-It verifies tensor dimensions and folds each BatchNorm into its preceding conv:
-    weight_fused = weight * gamma / sqrt(running_var + eps)
-    bias_fused   = beta - running_mean * gamma / sqrt(running_var + eps)
-
-PyTorch conv layout [output, input, ky, kx] is used unchanged in C.
-"""
 import argparse
 import math
 from pathlib import Path

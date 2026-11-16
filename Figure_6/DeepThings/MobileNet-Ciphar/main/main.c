@@ -1,8 +1,4 @@
-/* Three-ESP32 layer execution benchmark, all six CNN/dataset choices.
- * Shared firmware on each board, initial input overlap and redundant intermediate computation, no halo exchange.
- * COM3 coordinator displays ONLY per-run per-layer maxima in milliseconds.
- * Times are local computation times (not Wi-Fi/ESP-NOW time).
- */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
@@ -410,7 +406,7 @@ static void coordinator_task(void)
     make_input();
     memcpy(s_local, s_full_image + (size_t)ROW_START_ID(0) * ROW_BYTES, local_bytes(0));
     if (!distribute_input()) {
-        fprintf(stderr, "ERROR: ESP-NOW input transfer failed; verify COM7/COM8 and selected model/dataset.\n");
+        fprintf(stderr, "ERROR: input transfer failed; verify COM  and selected model/dataset.\n");
         return;
     }
     uint32_t layer_times[3][MAX_TIMED_LAYERS] = {{0}};
@@ -430,7 +426,7 @@ static void coordinator_task(void)
 }
 void app_main(void)
 {
-    esp_log_level_set("*", ESP_LOG_NONE);   /* suppress application Wi-Fi logging */
+    esp_log_level_set("*", ESP_LOG_NONE);  
     s_id = recognize_device();
     if (s_id < 0) {
         fprintf(stderr, "ERROR: unassigned ESP32 MAC.\n");
