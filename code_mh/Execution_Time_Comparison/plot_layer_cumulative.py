@@ -240,12 +240,12 @@ LAYOUTS = {
     "2x3": [["LeNet-MNIST", "MobileNet-MNIST", "ResNet-MNIST"],
             ["LeNet-Ciphar", "MobileNet-Ciphar", "ResNet-Ciphar"]],
 }
-TITLES = {"LeNet-MNIST": "LeNet-5 (MNIST)",
+TITLES = {"LeNet-MNIST": "LeNet (MNIST)",
           "MobileNet-MNIST": "MobileNet (MNIST)",
-          "ResNet-MNIST": "ResNet-20 (MNIST)",
-          "LeNet-Ciphar": "LeNet-5 (CIFAR-10)",
+          "ResNet-MNIST": "ResNet (MNIST)",
+          "LeNet-Ciphar": "LeNet (CIFAR-10)",
           "MobileNet-Ciphar": "MobileNet (CIFAR-10)",
-          "ResNet-Ciphar": "ResNet-20 (CIFAR-10)"}
+          "ResNet-Ciphar": "ResNet (CIFAR-10)"}
 # figsize (in), subplots_adjust kwargs, y of the shared x label
 GEOMETRY = {
     "1x6": ((7.16, 1.6), dict(left=0.06, right=0.94, bottom=0.19,
