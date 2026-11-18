@@ -24,7 +24,7 @@ DATA = HERE.parents[1] / "code_mff" / "Execution_Time_Comparison"
 METHODS = ["DeepThings", "EdgeFlow", "Proposed"]
 # Seaborn palettes: "pastel" for bar fills, matching "deep" hue for lines.
 BAR_COLORS = {"DeepThings": "#A1C9F4", "EdgeFlow": "#FFB482", "Proposed": "#8DE5A1"}
-LINE_COLORS = {"DeepThings": "#4C72B0", "EdgeFlow": "#DD8452", "Proposed": "#55A868"}
+LINE_COLORS = {"DeepThings": "#4C72B0", "EdgeFlow": "#DD8452", "Proposed": "#3A8A4C"}
 MARKERS = {"DeepThings": "o", "EdgeFlow": "s", "Proposed": "^"}
 LINE_KW = dict(linewidth=1.0, markersize=2.8, markeredgewidth=0.5,
                markeredgecolor="black")
