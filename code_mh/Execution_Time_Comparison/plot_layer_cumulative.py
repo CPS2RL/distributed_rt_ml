@@ -165,19 +165,19 @@ def plot_single(name, out_dir):
     return out
 
 
-# Panel order for each combined layout (row-major); letters follow this order.
+# Panel order for each combined layout (row-major).
 LAYOUTS = {
     "1x6": [["LeNet-MNIST", "LeNet-Ciphar", "MobileNet-MNIST",
              "MobileNet-Ciphar", "ResNet-MNIST", "ResNet-Ciphar"]],
     "2x3": [["LeNet-MNIST", "MobileNet-MNIST", "ResNet-MNIST"],
             ["LeNet-Ciphar", "MobileNet-Ciphar", "ResNet-Ciphar"]],
 }
-TITLES = {"LeNet-MNIST": "LeNet-5, MNIST",
-          "MobileNet-MNIST": "MobileNet, MNIST",
-          "ResNet-MNIST": "ResNet-20, MNIST",
-          "LeNet-Ciphar": "LeNet-5, CIFAR-10",
-          "MobileNet-Ciphar": "MobileNet, CIFAR-10",
-          "ResNet-Ciphar": "ResNet-20, CIFAR-10"}
+TITLES = {"LeNet-MNIST": "LeNet-5 (MNIST)",
+          "MobileNet-MNIST": "MobileNet (MNIST)",
+          "ResNet-MNIST": "ResNet-20 (MNIST)",
+          "LeNet-Ciphar": "LeNet-5 (CIFAR-10)",
+          "MobileNet-Ciphar": "MobileNet (CIFAR-10)",
+          "ResNet-Ciphar": "ResNet-20 (CIFAR-10)"}
 # figsize (in), subplots_adjust kwargs, y of the shared x label
 GEOMETRY = {
     "1x6": ((7.16, 1.6), dict(left=0.06, right=0.94, bottom=0.19,
@@ -194,12 +194,11 @@ def plot_grid(out_dir, layout="1x6"):
     fig, axes = plt.subplots(len(grid), len(grid[0]), figsize=figsize,
                              squeeze=False)
     fig.subplots_adjust(**adjust)
-    letters = iter("abcdef")
     for r, row in enumerate(grid):
         for c, name in enumerate(row):
             ax_bar, ax_cum, _ = draw_panel(axes[r, c], name, unit="ms",
                                          compact=(layout == "1x6"))
-            ax_bar.set_title(f"({next(letters)}) {TITLES[name]}",
+            ax_bar.set_title(TITLES[name],
                              fontsize=6.5, pad=2.5)
 
     mid_y = (adjust["bottom"] + adjust["top"]) / 2
