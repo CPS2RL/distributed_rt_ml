@@ -20,7 +20,8 @@ import pandas as pd
 from matplotlib.legend_handler import HandlerTuple
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
-from matplotlib.ticker import FuncFormatter, MaxNLocator
+from matplotlib.ticker import (FuncFormatter, LogLocator, MaxNLocator,
+                               NullFormatter)
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE.parents[1] / "code_mff" / "Execution_Time_Comparison"
@@ -92,9 +93,16 @@ def kfmt(v, _pos):
 
 
 def legend_handles():
-    return [(Patch(facecolor=BAR_COLORS[m], edgecolor="black", linewidth=0.4),
-             Line2D([], [], color=LINE_COLORS[m], marker=MARKERS[m], **LINE_KW))
-            for m in METHODS]
+    if PER_LAYER == "dots":
+        first = [Line2D([], [], linestyle="none", marker=MARKERS[m],
+                        markersize=2.6, markeredgewidth=0.4,
+                        markeredgecolor=LINE_COLORS[m],
+                        markerfacecolor=BAR_COLORS[m]) for m in METHODS]
+    else:
+        first = [Patch(facecolor=BAR_COLORS[m], edgecolor="black",
+                       linewidth=0.4) for m in METHODS]
+    return [(f, Line2D([], [], color=LINE_COLORS[m], marker=MARKERS[m],
+                       **LINE_KW)) for f, m in zip(first, METHODS)]
 
 
 LEGEND_KW = dict(handler_map={tuple: HandlerTuple(ndivide=None, pad=0.3)},
@@ -102,12 +110,39 @@ LEGEND_KW = dict(handler_map={tuple: HandlerTuple(ndivide=None, pad=0.3)},
                  labelspacing=0.15, columnspacing=0.6, handletextpad=0.3)
 
 
+def blocks_of(layers):
+    """Group a deep net's layers into blocks: Stem | each D/P pair or residual
+    block | GAP+FC head. Returns a list of column lists."""
+    groups, cur, key = [], [], None
+    for l in layers:
+        if l in ("Stem",):
+            groups.append([l]); continue
+        if l in ("GAP", "FC"):
+            if cur:
+                groups.append(cur); cur, key = [], None
+            if groups and groups[-1][0] == "GAP":
+                groups[-1].append(l)
+            else:
+                groups.append([l])
+            continue
+        # MobileNet: D3/P3 -> "3"; ResNet: B3C1/B3C2/B3Add -> "B3"
+        k = l[1:] if l[0] in "DP" else l[:2] if l[2].isalpha() else l[:3]
+        if k != key and cur:
+            groups.append(cur); cur = []
+        cur.append(l); key = k
+    if cur:
+        groups.append(cur)
+    return groups
+
+
 def draw_panel(ax_bar, name, unit=None, compact=False):
     """Draw one workload into ax_bar (+ a twin axis). Returns (ax_bar, ax_cum, unit)."""
     tag, layers, deadline, _pdf, default_unit = WORKLOADS[name]
     unit = unit or default_unit
     k = SCALE[unit]
-    n = len(layers)
+    group = GROUP_BLOCKS and len(layers) > 10
+    cols = blocks_of(layers) if group else [[l] for l in layers]
+    n = len(cols)
     x = np.arange(1, n + 1)
     width = 0.8 / len(METHODS)
 
@@ -118,50 +153,67 @@ def draw_panel(ax_bar, name, unit=None, compact=False):
     per_layer, cumulative = {}, {}
     for m in METHODS:
         df = load(m, tag)
-        per_layer[m] = df[layers].quantile(0.99).to_numpy() * k
-        cumulative[m] = df[layers].cumsum(axis=1).quantile(0.99).to_numpy() * k
+        t = pd.concat([df[c].sum(axis=1) for c in cols], axis=1)  # runs x units
+        per_layer[m] = t.quantile(0.99).to_numpy() * k
+        cumulative[m] = t.cumsum(axis=1).quantile(0.99).to_numpy() * k
     bar_max = max(v.max() for v in per_layer.values())
     cum_max = max(v.max() for v in cumulative.values())
 
-    if BAR_STYLE == "overlay":
-        # One full-width slot per layer; the three methods are drawn on top of
-        # each other, tallest at the back, so every bar stays visible.
-        h = np.vstack([per_layer[m] for m in METHODS])  # (methods, layers)
-        order = np.argsort(-h, axis=0)                   # tallest first
-        for rank in range(len(METHODS)):
-            for j in range(n):
-                m = METHODS[order[rank, j]]
-                ax_bar.bar(x[j], per_layer[m][j], width=0.8,
-                           color=BAR_COLORS[m], edgecolor="black",
-                           linewidth=0.3, zorder=2 + rank)
-    else:  # grouped
-        for i, m in enumerate(METHODS):
+    for i, m in enumerate(METHODS):
+        if PER_LAYER == "bars":
             ax_bar.bar(x + (i - 1) * width, per_layer[m], width=width,
-                       color=BAR_COLORS[m], edgecolor="black",
+                       color=BAR_COLORS[m],
+                       edgecolor="black" if BAR_EDGES else "none",
                        linewidth=0.3 if compact else 0.4)
-
+        elif PER_LAYER == "step":
+            # Thin per-layer staircase with a light fill underneath.
+            ax_bar.stairs(per_layer[m], np.arange(0.5, n + 1), baseline=0,
+                          fill=True, color=BAR_COLORS[m], alpha=0.35)
+            ax_bar.stairs(per_layer[m], np.arange(0.5, n + 1), baseline=None,
+                          color=LINE_COLORS[m], linewidth=0.6)
+        elif PER_LAYER == "dots":
+            # Lollipop-free dot plot: one small marker per method per layer.
+            ax_bar.plot(x + (i - 1) * width, per_layer[m], linestyle="none",
+                        marker=MARKERS[m], markersize=2.2, markeredgewidth=0.4,
+                        markeredgecolor=LINE_COLORS[m],
+                        markerfacecolor=BAR_COLORS[m])
     for m in METHODS:
-        # Mark every layer for short nets; thin out markers for deep ones.
+        # Mark every unit for short sequences; thin out markers for long ones.
         ax_cum.plot(x, cumulative[m], color=LINE_COLORS[m], marker=MARKERS[m],
-                    markevery=1 if n <= 10 else 3, **LINE_KW)
+                    markevery=1 if n <= 16 else 3, **LINE_KW)
 
     ax_cum.axhline(deadline * k, linestyle="--", linewidth=0.8,
                    color=DEADLINE_COLOR)
 
     # Bars live in the lower part of the panel; lines/deadline use full height.
-    ax_bar.set_ylim(0, bar_max * 1.8)
+    if PER_LAYER == "dots":
+        # Per-layer times span ~3-4 decades (pool/add/GAP vs conv/FC), so a
+        # linear axis flattens the cheap layers onto zero; use log scale.
+        bar_min = min(v[v > 0].min() for v in per_layer.values())
+        ax_bar.set_yscale("log")
+        ax_bar.set_ylim(bar_min / 2, bar_max * 2)
+    else:
+        ax_bar.set_ylim(0, bar_max * 1.8)
     ax_cum.set_ylim(0, max(cum_max, deadline * k) * 1.08)
 
     ax_bar.set_xlim(0.4, n + 0.6)
     if n <= 10:
         ax_bar.set_xticks(x)
+    elif n <= 16:
+        ax_bar.set_xticks([1, 5, 10, 15][: n // 5 + 1])
     else:
         ax_bar.set_xticks([1, 10, 20, 30] if compact else
                           [1, 5, 10, 15, 20, 25, 30][: n // 5 + 1])
     for ax in (ax_bar, ax_cum):
+        if ax.get_yscale() == "log":
+            ax.yaxis.set_major_locator(LogLocator(base=10, numticks=6))
+            ax.yaxis.set_minor_locator(LogLocator(base=10, subs="auto",
+                                                  numticks=10))
+            ax.yaxis.set_minor_formatter(NullFormatter())
+        elif compact:
+            ax.yaxis.set_major_locator(MaxNLocator(nbins=4))
         ax.yaxis.set_major_formatter(FuncFormatter(kfmt))
         if compact:
-            ax.yaxis.set_major_locator(MaxNLocator(nbins=4))
             ax.tick_params(axis="both", labelsize=5.5, pad=1.5)
     return ax_bar, ax_cum, unit
 
@@ -202,7 +254,9 @@ GEOMETRY = {
                              wspace=0.42, hspace=0.42), 0.015),
 }
 GRID_PDF = "layer_cumulative_{}.pdf"
-BAR_STYLE = "overlay"  # or "grouped"; set by --bars
+GROUP_BLOCKS = False  # --blocks: MobileNet/ResNet bars per block
+BAR_EDGES = True      # --no-edges: flat pastel bars
+PER_LAYER = "dots"    # --per-layer {dots,bars,step}
 
 
 def plot_grid(out_dir, layout="1x6"):
@@ -235,23 +289,82 @@ def plot_grid(out_dir, layout="1x6"):
     return out
 
 
+def plot_split(out_dir):
+    """2x6 figure*: top row cumulative P99 (lines + deadline), bottom row
+    per-layer P99 (thin lines), sharing x per column. No bars, no twin axes."""
+    order = LAYOUTS["1x6"][0]
+    fig, axes = plt.subplots(2, 6, figsize=(7.16, 2.35), sharex="col",
+                             gridspec_kw=dict(height_ratios=[1.25, 1]))
+    fig.subplots_adjust(left=0.065, right=0.995, bottom=0.13, top=0.84,
+                        wspace=0.42, hspace=0.12)
+    for c, name in enumerate(order):
+        tag, layers, deadline, _pdf, _u = WORKLOADS[name]
+        n = len(layers)
+        x = np.arange(1, n + 1)
+        top, bot = axes[0, c], axes[1, c]
+        for m in METHODS:
+            df = load(m, tag)
+            cum = df[layers].cumsum(axis=1).quantile(0.99).to_numpy()
+            per = df[layers].quantile(0.99).to_numpy()
+            me = 1 if n <= 10 else 3
+            top.plot(x, cum, color=LINE_COLORS[m], marker=MARKERS[m],
+                     markevery=me, **LINE_KW)
+            bot.plot(x, per, color=LINE_COLORS[m], marker=MARKERS[m],
+                     markevery=me, **{**LINE_KW, "linewidth": 0.8,
+                                      "markersize": 2.4})
+        top.axhline(deadline, linestyle="--", linewidth=0.8,
+                    color=DEADLINE_COLOR)
+        top.set_ylim(0, None)
+        bot.set_ylim(0, None)
+        top.set_title(TITLES[name], fontsize=6.5, pad=2.5)
+        bot.set_xlim(0.5, n + 0.5)
+        bot.set_xticks(x if n <= 10 else [1, 10, 20, 30])
+        for ax in (top, bot):
+            ax.yaxis.set_major_formatter(FuncFormatter(kfmt))
+            ax.yaxis.set_major_locator(MaxNLocator(nbins=4))
+            ax.tick_params(axis="both", labelsize=5.5, pad=1.5)
+            ax.grid(axis="y", linewidth=0.3, color="0.85")
+            ax.set_axisbelow(True)
+    axes[0, 0].set_ylabel("Cumulative\nTime (ms)", linespacing=0.95)
+    axes[1, 0].set_ylabel("Per-Layer\nTime (ms)", linespacing=0.95)
+    fig.align_ylabels(axes[:, 0])
+    fig.supxlabel("Layer Index", fontsize=7, y=0.0, va="bottom")
+    handles = [Line2D([], [], color=LINE_COLORS[m], marker=MARKERS[m],
+                      **LINE_KW) for m in METHODS]
+    handles.append(Line2D([], [], color=DEADLINE_COLOR, linestyle="--",
+                          linewidth=0.8))
+    fig.legend(handles, METHODS + ["Deadline"], loc="upper center",
+               bbox_to_anchor=(0.5, 1.0), ncol=4,
+               **{k: v for k, v in LEGEND_KW.items() if k != "handler_map"},
+               )
+    out = out_dir / "layer_cumulative_split.pdf"
+    fig.savefig(out, bbox_inches="tight", pad_inches=0.01)
+    plt.close(fig)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, default=HERE / "figures")
-    ap.add_argument("--layout", choices=list(LAYOUTS), default="1x6")
-    ap.add_argument("--bars", choices=["overlay", "grouped"], default="overlay")
+    ap.add_argument("--layout", choices=list(LAYOUTS) + ["split"], default="1x6")
+    ap.add_argument("--blocks", action="store_true",
+                    help="aggregate MobileNet/ResNet into blocks")
+    ap.add_argument("--no-edges", action="store_true")
+    ap.add_argument("--per-layer", choices=["dots", "bars", "step"], default="dots")
     ap.add_argument("--single", action="store_true",
                     help="one PDF per workload instead of a combined figure")
     ap.add_argument("--only", nargs="*", choices=list(WORKLOADS))
     args = ap.parse_args()
-    global BAR_STYLE
-    BAR_STYLE = args.bars
+    global GROUP_BLOCKS, BAR_EDGES, PER_LAYER
+    GROUP_BLOCKS, BAR_EDGES = args.blocks, not args.no_edges
+    PER_LAYER = args.per_layer
     args.out.mkdir(parents=True, exist_ok=True)
     if args.single:
         for name in args.only or WORKLOADS:
             print(plot_single(name, args.out))
     else:
-        print(plot_grid(args.out, args.layout))
+        print(plot_split(args.out) if args.layout == "split"
+              else plot_grid(args.out, args.layout))
 
 
 if __name__ == "__main__":
