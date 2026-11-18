@@ -153,7 +153,7 @@ def draw_panel(ax_bar, name, unit=None, compact=False):
 def plot_single(name, out_dir):
     fig, ax_bar = plt.subplots(figsize=(1.95, 1.75))
     ax_bar, ax_cum, unit = draw_panel(ax_bar, name)
-    ax_bar.set_xlabel("Layer Number")
+    ax_bar.set_xlabel("Layer Index")
     ax_bar.set_ylabel(f"Per-Layer\nExecution Time ({unit})", linespacing=0.95)
     ax_cum.set_ylabel(f"Cumulative\nExecution Time ({unit})", linespacing=0.95)
     ax_cum.legend(legend_handles(), METHODS, loc="lower center",
@@ -203,7 +203,7 @@ def plot_grid(out_dir, layout="1x6"):
                              fontsize=6.5, pad=2.5)
 
     mid_y = (adjust["bottom"] + adjust["top"]) / 2
-    fig.supxlabel("Layer Number", fontsize=7, y=xlabel_y, va="bottom")
+    fig.supxlabel("Layer Index", fontsize=7, y=xlabel_y, va="bottom")
     fig.text(0.005, mid_y, "Per-Layer\nExec. Time (ms)" if layout == "1x6"
              else "Per-Layer Execution Time (ms)", rotation=90,
              ha="left", va="center", fontsize=7, linespacing=0.95)
