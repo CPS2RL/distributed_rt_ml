@@ -59,7 +59,7 @@ def plot(out_dir: Path, show_waiting: bool) -> Path:
     releases = [i * PERIOD for i in range(len(PRODUCTS))]
     deadlines = [r + PERIOD for r in releases]
 
-    fig, ax = plt.subplots(figsize=(3.5, 1.75))
+    fig, ax = plt.subplots(figsize=(3.5, 1.62))
     bar_h, gap = 0.42, 0.8
     arrow_len = 0.2
 
@@ -126,13 +126,10 @@ def plot(out_dir: Path, show_waiting: bool) -> Path:
     ]
     if show_waiting:
         handles.append(Line2D([], [], color="0.45", lw=0.8, label="Waiting"))
-    # matplotlib fills legend columns first; interleave so rows read
-    # "Job 1, Job 2, Job 3" / "Release, Deadline, After deadline".
-    if not show_waiting:
-        handles = [handles[k] for k in (0, 3, 1, 4, 2, 5)]
+    # Single-row legend above the plot.
     ax.legend(handles=handles, loc="lower center", bbox_to_anchor=(0.5, 1.01),
-              ncol=4 if show_waiting else 3, frameon=False, handlelength=1.4,
-              columnspacing=1.0, handletextpad=0.4, labelspacing=0.25,
+              ncol=len(handles), frameon=False, handlelength=1.1,
+              columnspacing=0.7, handletextpad=0.3, labelspacing=0.25,
               borderpad=0.1)
 
     fig.tight_layout(pad=0.2)
