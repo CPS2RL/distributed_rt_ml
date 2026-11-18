@@ -222,8 +222,8 @@ def plot_single(name, out_dir):
     fig, ax_bar = plt.subplots(figsize=(1.95, 1.75))
     ax_bar, ax_cum, unit = draw_panel(ax_bar, name)
     ax_bar.set_xlabel("Layer Index")
-    ax_bar.set_ylabel(f"Per-Layer\nExecution Time ({unit})", linespacing=0.95)
-    ax_cum.set_ylabel(f"Cumulative\nExecution Time ({unit})", linespacing=0.95)
+    ax_bar.set_ylabel(f"Per-Layer\nExecution Time ({unit})", linespacing=0.95, multialignment="center")
+    ax_cum.set_ylabel(f"Cumulative\nExecution Time ({unit})", linespacing=0.95, multialignment="center")
     ax_cum.legend(legend_handles(), METHODS, loc="lower center",
                   bbox_to_anchor=(0.5, 1.01), ncol=3, **LEGEND_KW)
     fig.tight_layout(pad=0.2)
@@ -276,10 +276,10 @@ def plot_grid(out_dir, layout="1x6"):
     fig.supxlabel("Layer Index", fontsize=7, y=xlabel_y, va="bottom")
     fig.text(0.005, mid_y, "Per-Layer\nExec. Time (ms)" if layout == "1x6"
              else "Per-Layer Execution Time (ms)", rotation=90,
-             ha="left", va="center", fontsize=7, linespacing=0.95)
+             ha="left", va="center", fontsize=7, linespacing=0.95, multialignment="center")
     fig.text(0.995, mid_y, "Cumulative\nExec. Time (ms)" if layout == "1x6"
              else "Cumulative Execution Time (ms)", rotation=270,
-             ha="right", va="center", fontsize=7, linespacing=0.95)
+             ha="right", va="center", fontsize=7, linespacing=0.95, multialignment="center")
     fig.legend(legend_handles(), METHODS, loc="upper center",
                bbox_to_anchor=(0.5, 1.02), ncol=3,
                **{**LEGEND_KW, "columnspacing": 1.6})
@@ -325,8 +325,8 @@ def plot_split(out_dir):
             ax.tick_params(axis="both", labelsize=5.5, pad=1.5)
             ax.grid(axis="y", linewidth=0.3, color="0.85")
             ax.set_axisbelow(True)
-    axes[0, 0].set_ylabel("Cumulative\nTime (ms)", linespacing=0.95)
-    axes[1, 0].set_ylabel("Per-Layer\nTime (ms)", linespacing=0.95)
+    axes[0, 0].set_ylabel("Cumulative\nTime (ms)", linespacing=0.95, multialignment="center")
+    axes[1, 0].set_ylabel("Per-Layer\nTime (ms)", linespacing=0.95, multialignment="center")
     fig.align_ylabels(axes[:, 0])
     fig.supxlabel("Layer Index", fontsize=7, y=0.0, va="bottom")
     handles = [Line2D([], [], color=LINE_COLORS[m], marker=MARKERS[m],
