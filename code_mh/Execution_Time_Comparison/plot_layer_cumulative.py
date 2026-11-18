@@ -119,8 +119,8 @@ def plot(name: str, out_dir: Path) -> Path:
         ax_bar.set_xticks([1, 5, 10, 15, 20, 25, 30][: (n // 5) + 1])
 
     ax_bar.set_xlabel("Layer Number")
-    ax_bar.set_ylabel(f"Per-layer P99 ({unit})")
-    ax_cum.set_ylabel(f"Cumulative P99 ({unit})")
+    ax_bar.set_ylabel(f"Per-Layer\nExecution Time ({unit})", linespacing=0.95)
+    ax_cum.set_ylabel(f"Cumulative\nExecution Time ({unit})", linespacing=0.95)
 
     handles = [(Patch(facecolor=BAR_COLORS[m], edgecolor="black",
                       linewidth=0.4),
