@@ -115,18 +115,34 @@ def draw_panel(ax_bar, name, unit=None, compact=False):
     ax_cum.set_zorder(ax_bar.get_zorder() + 1)  # lines/deadline above bars
     ax_cum.patch.set_visible(False)
 
-    bar_max, cum_max = 0.0, 0.0
-    for i, m in enumerate(METHODS):
+    per_layer, cumulative = {}, {}
+    for m in METHODS:
         df = load(m, tag)
-        per_layer = df[layers].quantile(0.99).to_numpy() * k
-        cumulative = df[layers].cumsum(axis=1).quantile(0.99).to_numpy() * k
-        bar_max = max(bar_max, per_layer.max())
-        cum_max = max(cum_max, cumulative.max())
-        ax_bar.bar(x + (i - 1) * width, per_layer, width=width,
-                   color=BAR_COLORS[m], edgecolor="black" if n <= 10 else "0.3",
-                   linewidth=0.4 if n <= 10 else 0.12)
+        per_layer[m] = df[layers].quantile(0.99).to_numpy() * k
+        cumulative[m] = df[layers].cumsum(axis=1).quantile(0.99).to_numpy() * k
+    bar_max = max(v.max() for v in per_layer.values())
+    cum_max = max(v.max() for v in cumulative.values())
+
+    if BAR_STYLE == "overlay":
+        # One full-width slot per layer; the three methods are drawn on top of
+        # each other, tallest at the back, so every bar stays visible.
+        h = np.vstack([per_layer[m] for m in METHODS])  # (methods, layers)
+        order = np.argsort(-h, axis=0)                   # tallest first
+        for rank in range(len(METHODS)):
+            for j in range(n):
+                m = METHODS[order[rank, j]]
+                ax_bar.bar(x[j], per_layer[m][j], width=0.8,
+                           color=BAR_COLORS[m], edgecolor="black",
+                           linewidth=0.3, zorder=2 + rank)
+    else:  # grouped
+        for i, m in enumerate(METHODS):
+            ax_bar.bar(x + (i - 1) * width, per_layer[m], width=width,
+                       color=BAR_COLORS[m], edgecolor="black",
+                       linewidth=0.3 if compact else 0.4)
+
+    for m in METHODS:
         # Mark every layer for short nets; thin out markers for deep ones.
-        ax_cum.plot(x, cumulative, color=LINE_COLORS[m], marker=MARKERS[m],
+        ax_cum.plot(x, cumulative[m], color=LINE_COLORS[m], marker=MARKERS[m],
                     markevery=1 if n <= 10 else 3, **LINE_KW)
 
     ax_cum.axhline(deadline * k, linestyle="--", linewidth=0.8,
@@ -186,6 +202,7 @@ GEOMETRY = {
                              wspace=0.42, hspace=0.42), 0.015),
 }
 GRID_PDF = "layer_cumulative_{}.pdf"
+BAR_STYLE = "overlay"  # or "grouped"; set by --bars
 
 
 def plot_grid(out_dir, layout="1x6"):
@@ -222,10 +239,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, default=HERE / "figures")
     ap.add_argument("--layout", choices=list(LAYOUTS), default="1x6")
+    ap.add_argument("--bars", choices=["overlay", "grouped"], default="overlay")
     ap.add_argument("--single", action="store_true",
                     help="one PDF per workload instead of a combined figure")
     ap.add_argument("--only", nargs="*", choices=list(WORKLOADS))
     args = ap.parse_args()
+    global BAR_STYLE
+    BAR_STYLE = args.bars
     args.out.mkdir(parents=True, exist_ok=True)
     if args.single:
         for name in args.only or WORKLOADS:
