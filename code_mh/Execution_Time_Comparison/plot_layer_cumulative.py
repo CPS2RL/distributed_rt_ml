@@ -25,6 +25,7 @@ METHODS = ["DeepThings", "EdgeFlow", "Proposed"]
 # Seaborn palettes: "pastel" for bar fills, matching "deep" hue for lines.
 BAR_COLORS = {"DeepThings": "#A1C9F4", "EdgeFlow": "#FFB482", "Proposed": "#8DE5A1"}
 LINE_COLORS = {"DeepThings": "#4C72B0", "EdgeFlow": "#DD8452", "Proposed": "#3A8A4C"}
+DEADLINE_COLOR = "#800000"  # maroon
 MARKERS = {"DeepThings": "o", "EdgeFlow": "s", "Proposed": "^"}
 LINE_KW = dict(linewidth=1.0, markersize=3.0, markeredgewidth=0.8,
                markerfacecolor="white")  # hollow; edge = line color
@@ -105,7 +106,7 @@ def plot(name: str, out_dir: Path) -> Path:
         ax_cum.plot(x, cumulative, color=LINE_COLORS[m], marker=MARKERS[m],
                     markevery=1 if n <= 10 else 3, **LINE_KW)
 
-    ax_cum.axhline(deadline, linestyle="--", linewidth=0.8, color="black")
+    ax_cum.axhline(deadline, linestyle="--", linewidth=0.8, color=DEADLINE_COLOR)
 
     # Bars live in the lower part of the panel; lines/deadline use full height.
     ax_bar.set_ylim(0, bar_max * 1.8)
@@ -126,12 +127,11 @@ def plot(name: str, out_dir: Path) -> Path:
                 Line2D([], [], color=LINE_COLORS[m], marker=MARKERS[m],
                        **LINE_KW))
                for m in METHODS]
-    handles.append(Line2D([], [], color="black", linestyle="--", linewidth=0.8))
-    ax_cum.legend(handles, METHODS + ["Deadline"],
+    ax_cum.legend(handles, METHODS,
                   handler_map={tuple: HandlerTuple(ndivide=None, pad=0.3)},
-                  loc="lower center", bbox_to_anchor=(0.5, 1.01), ncol=2,
-                  frameon=False, handlelength=2.0, borderpad=0.1,
-                  labelspacing=0.15, columnspacing=0.8, handletextpad=0.4)
+                  loc="lower center", bbox_to_anchor=(0.5, 1.01), ncol=3,
+                  frameon=False, handlelength=1.8, borderpad=0.1,
+                  labelspacing=0.15, columnspacing=0.6, handletextpad=0.3)
 
     fig.tight_layout(pad=0.2)
     out_dir.mkdir(parents=True, exist_ok=True)
