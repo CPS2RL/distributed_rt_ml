@@ -26,8 +26,8 @@ METHODS = ["DeepThings", "EdgeFlow", "Proposed"]
 BAR_COLORS = {"DeepThings": "#A1C9F4", "EdgeFlow": "#FFB482", "Proposed": "#8DE5A1"}
 LINE_COLORS = {"DeepThings": "#4C72B0", "EdgeFlow": "#DD8452", "Proposed": "#3A8A4C"}
 MARKERS = {"DeepThings": "o", "EdgeFlow": "s", "Proposed": "^"}
-LINE_KW = dict(linewidth=1.0, markersize=2.8, markeredgewidth=0.5,
-               markeredgecolor="black")
+LINE_KW = dict(linewidth=1.0, markersize=3.0, markeredgewidth=0.8,
+               markerfacecolor="white")  # hollow; edge = line color
 
 LENET = ["Conv1", "Pool1", "Conv2", "Pool2", "FC1", "FC2", "FC3"]
 MOBILENET = (["Stem"]
@@ -103,7 +103,6 @@ def plot(name: str, out_dir: Path) -> Path:
                    linewidth=0.4 if n <= 10 else 0.25)
         # Mark every layer for short nets; thin out markers for deep ones.
         ax_cum.plot(x, cumulative, color=LINE_COLORS[m], marker=MARKERS[m],
-                    markerfacecolor=LINE_COLORS[m],
                     markevery=1 if n <= 10 else 3, **LINE_KW)
 
     ax_cum.axhline(deadline, linestyle="--", linewidth=0.8, color="black")
@@ -125,7 +124,7 @@ def plot(name: str, out_dir: Path) -> Path:
     handles = [(Patch(facecolor=BAR_COLORS[m], edgecolor="black",
                       linewidth=0.4),
                 Line2D([], [], color=LINE_COLORS[m], marker=MARKERS[m],
-                       markerfacecolor=LINE_COLORS[m], **LINE_KW))
+                       **LINE_KW))
                for m in METHODS]
     handles.append(Line2D([], [], color="black", linestyle="--", linewidth=0.8))
     ax_cum.legend(handles, METHODS + ["Deadline"],
