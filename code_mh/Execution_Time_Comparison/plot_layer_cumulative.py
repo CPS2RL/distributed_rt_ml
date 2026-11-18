@@ -63,7 +63,7 @@ plt.rcParams.update({
     "axes.labelsize": 7,
     "xtick.labelsize": 6,
     "ytick.labelsize": 6,
-    "legend.fontsize": 5.5,
+    "legend.fontsize": 6,
     "axes.linewidth": 0.6,
     "xtick.major.width": 0.6,
     "ytick.major.width": 0.6,
@@ -214,7 +214,7 @@ def draw_panel(ax_bar, name, unit=None, compact=False):
             ax.yaxis.set_major_locator(MaxNLocator(nbins=4))
         ax.yaxis.set_major_formatter(FuncFormatter(kfmt))
         if compact:
-            ax.tick_params(axis="both", labelsize=5.5, pad=1.5)
+            ax.tick_params(axis="both", labelsize=6, pad=1.5)
     return ax_bar, ax_cum, unit
 
 
@@ -322,7 +322,7 @@ def plot_split(out_dir):
         for ax in (top, bot):
             ax.yaxis.set_major_formatter(FuncFormatter(kfmt))
             ax.yaxis.set_major_locator(MaxNLocator(nbins=4))
-            ax.tick_params(axis="both", labelsize=5.5, pad=1.5)
+            ax.tick_params(axis="both", labelsize=6, pad=1.5)
             ax.grid(axis="y", linewidth=0.3, color="0.85")
             ax.set_axisbelow(True)
     axes[0, 0].set_ylabel("Cumulative\nTime (ms)", linespacing=0.95, multialignment="center")

@@ -33,9 +33,9 @@ INK = "black"
 plt.rcParams.update({
     "font.size": 7,
     "axes.labelsize": 7,
-    "xtick.labelsize": 6.5,
+    "xtick.labelsize": 6,
     "ytick.labelsize": 7,
-    "legend.fontsize": 6.5,
+    "legend.fontsize": 6,
     "axes.linewidth": 0.6,
     "xtick.major.width": 0.6,
     "ytick.major.width": 0.6,
